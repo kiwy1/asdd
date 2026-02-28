@@ -1,0 +1,94 @@
+val PEAK_THRESHOLD_KW = 350.0
+val LOAD_SHED_LEVEL1 = 300.0
+val LOAD_SHED_LEVEL2 = 380.0
+val LOAD_SHED_LEVEL3 = 420.0
+val LOAD_SHED_LEVEL4 = 450.0
+
+rule "Peak demand detection"
+when
+    Item V_Grid_TotalPower received update
+then
+    val power = (V_Grid_TotalPower.state as DecimalType)?.doubleValue ?: 0.0
+    V_PeakDemand_Threshold.postUpdate(PEAK_THRESHOLD_KW)
+
+    if (power > PEAK_THRESHOLD_KW) {
+        V_PeakDemand_Detected.sendCommand(ON)
+    } else {
+        V_PeakDemand_Detected.sendCommand(OFF)
+        if (V_LoadShed_Active.state == ON) {
+            V_LoadShed_Active.sendCommand(OFF)
+            V_LoadShed_Level.postUpdate(0)
+            V_LoadShed_Zone1.sendCommand(OFF)
+            V_LoadShed_Zone2.sendCommand(OFF)
+            V_LoadShed_Zone3.sendCommand(OFF)
+            V_LoadShed_Zone4.sendCommand(OFF)
+            V_LoadShed_Zone5.sendCommand(OFF)
+        }
+    }
+end
+
+rule "Load shedding automation - priority based"
+when
+    Item V_Grid_TotalPower received update
+then
+    val power = (V_Grid_TotalPower.state as DecimalType)?.doubleValue ?: 0.0
+
+    if (power >= LOAD_SHED_LEVEL4) {
+        V_LoadShed_Active.sendCommand(ON)
+        V_LoadShed_Level.postUpdate(4)
+        V_LoadShed_Zone1.sendCommand(ON)
+        V_LoadShed_Zone2.sendCommand(ON)
+        V_LoadShed_Zone3.sendCommand(ON)
+        V_LoadShed_Zone4.sendCommand(ON)
+        V_LoadShed_Zone5.sendCommand(ON)
+    } else if (power >= LOAD_SHED_LEVEL3) {
+        V_LoadShed_Active.sendCommand(ON)
+        V_LoadShed_Level.postUpdate(3)
+        V_LoadShed_Zone1.sendCommand(OFF)
+        V_LoadShed_Zone2.sendCommand(ON)
+        V_LoadShed_Zone3.sendCommand(ON)
+        V_LoadShed_Zone4.sendCommand(ON)
+        V_LoadShed_Zone5.sendCommand(ON)
+    } else if (power >= LOAD_SHED_LEVEL2) {
+        V_LoadShed_Active.sendCommand(ON)
+        V_LoadShed_Level.postUpdate(2)
+        V_LoadShed_Zone1.sendCommand(OFF)
+        V_LoadShed_Zone2.sendCommand(OFF)
+        V_LoadShed_Zone3.sendCommand(ON)
+        V_LoadShed_Zone4.sendCommand(ON)
+        V_LoadShed_Zone5.sendCommand(ON)
+    } else if (power >= LOAD_SHED_LEVEL1) {
+        V_LoadShed_Active.sendCommand(ON)
+        V_LoadShed_Level.postUpdate(1)
+        V_LoadShed_Zone1.sendCommand(OFF)
+        V_LoadShed_Zone2.sendCommand(OFF)
+        V_LoadShed_Zone3.sendCommand(OFF)
+        V_LoadShed_Zone4.sendCommand(ON)
+        V_LoadShed_Zone5.sendCommand(ON)
+    }
+
+    val n1 = (V_Node1_Power.state as DecimalType)?.doubleValue ?: 0
+    val n2 = (V_Node2_Power.state as DecimalType)?.doubleValue ?: 0
+    val n3 = (V_Node3_Power.state as DecimalType)?.doubleValue ?: 0
+    val n4 = (V_Node4_Power.state as DecimalType)?.doubleValue ?: 0
+    val n5 = (V_Node5_Power.state as DecimalType)?.doubleValue ?: 0
+    val n6 = (V_Node6_Power.state as DecimalType)?.doubleValue ?: 0
+
+    V_Priority_Critical.postUpdate(n1 * 0.4)
+    V_Priority_High.postUpdate(n2 * 0.6 + n3 * 0.5)
+    V_Priority_Medium.postUpdate(n4 * 0.7)
+    V_Priority_Low.postUpdate(n5 * 0.8)
+    V_Priority_Disposable.postUpdate(n6)
+end
+
+rule "Load balancing between zones"
+when
+    Member of gGridNodes received update
+then
+    val flowAb = (V_Flow_A_to_B.state as DecimalType)?.doubleValue ?: 0
+    val flowBc = (V_Flow_B_to_C.state as DecimalType)?.doubleValue ?: 0
+    val flowCd = (V_Flow_C_to_D.state as DecimalType)?.doubleValue ?: 0
+    val flowDe = (V_Flow_D_to_E.state as DecimalType)?.doubleValue ?: 0
+    val imbalance = Math.abs(flowAb - flowDe)
+    V_Flow_ZoneBalance.postUpdate(flowAb - flowDe)
+end

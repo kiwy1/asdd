@@ -1,0 +1,24 @@
+var int ruleExecCount = 0
+var int alertCount = 0
+
+rule "Increment rule execution count"
+when
+    Item V_Grid_TotalPower received update
+then
+    ruleExecCount = ruleExecCount + 1
+    if (ruleExecCount % 50 == 0) {
+        V_Perf_RuleExecCount.postUpdate(ruleExecCount)
+    }
+end
+
+rule "Count alerts"
+when
+    Item V_Alert_Frequency received command ON or
+    Item V_Alert_Voltage received command ON or
+    Item V_Alert_Overload received command ON or
+    Item V_Alert_Stability received command ON or
+    Item V_Alert_Emergency received command ON
+then
+    alertCount = alertCount + 1
+    V_Perf_AlertCount.postUpdate(alertCount)
+end

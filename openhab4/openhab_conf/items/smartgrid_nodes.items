@@ -1,0 +1,29 @@
+Group gGridNodes "Grid Nodes" <energy>
+
+Number:Power V_Node1_Power "Node1 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node1_Voltage "Node1 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node1_Frequency "Node1 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Node2_Power "Node2 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node2_Voltage "Node2 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node2_Frequency "Node2 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Node3_Power "Node3 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node3_Voltage "Node3 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node3_Frequency "Node3 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Node4_Power "Node4 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node4_Voltage "Node4 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node4_Frequency "Node4 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Node5_Power "Node5 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node5_Voltage "Node5 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node5_Frequency "Node5 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Node6_Power "Node6 Power [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Node6_Voltage "Node6 Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Node6_Frequency "Node6 Freq [%.2f Hz]" <energy> (gGridNodes)
+
+Number:Power V_Grid_TotalPower "Grid Total [%.1f kW]" <energy> (gGridNodes)
+Number:ElectricPotential V_Grid_AvgVoltage "Avg Voltage [%.1f V]" <energy> (gGridNodes)
+Number:Frequency V_Grid_AvgFrequency "Avg Frequency [%.2f Hz]" <energy> (gGridNodes)

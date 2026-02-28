@@ -1,0 +1,18 @@
+Group gDemandResponse "Demand Response" <energy>
+
+Switch V_PeakDemand_Detected "Peak Demand" <energy> (gDemandResponse)
+Number:Power V_PeakDemand_Threshold "Peak Threshold [%.0f kW]" <energy> (gDemandResponse)
+
+Switch V_LoadShed_Active "Load Shedding Active" <energy> (gDemandResponse)
+Number V_LoadShed_Level "Shed Level [%d]" <energy> (gDemandResponse)
+Switch V_LoadShed_Zone1 "Zone1 Shed" <energy> (gDemandResponse)
+Switch V_LoadShed_Zone2 "Zone2 Shed" <energy> (gDemandResponse)
+Switch V_LoadShed_Zone3 "Zone3 Shed" <energy> (gDemandResponse)
+Switch V_LoadShed_Zone4 "Zone4 Shed" <energy> (gDemandResponse)
+Switch V_LoadShed_Zone5 "Zone5 Shed" <energy> (gDemandResponse)
+
+Number V_Priority_Critical "Critical Load [%.0f kW]" <energy> (gDemandResponse)
+Number V_Priority_High "High Priority [%.0f kW]" <energy> (gDemandResponse)
+Number V_Priority_Medium "Medium [%.0f kW]" <energy> (gDemandResponse)
+Number V_Priority_Low "Low [%.0f kW]" <energy> (gDemandResponse)
+Number V_Priority_Disposable "Disposable [%.0f kW]" <energy> (gDemandResponse)

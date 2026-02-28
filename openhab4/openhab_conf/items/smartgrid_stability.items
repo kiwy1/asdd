@@ -1,0 +1,14 @@
+Group gStability "Grid Stability" <settings>
+
+Number V_Freq_Deviation "Freq Deviation [%.3f Hz]" <energy> (gStability)
+Switch V_Freq_Deviation_Alert "Freq Deviation Alert" <alert> (gStability)
+
+Number V_Voltage_Sag "Voltage Sag [%]" <energy> (gStability)
+Number V_Voltage_Swell "Voltage Swell [%]" <energy> (gStability)
+Switch V_Voltage_Sag_Alert "Voltage Sag Alert" <alert> (gStability)
+Switch V_Voltage_Swell_Alert "Voltage Swell Alert" <alert> (gStability)
+
+Number V_THD "Total Harmonic Distortion [%.2f %%]" <energy> (gStability)
+Switch V_THD_Alert "THD Alert" <alert> (gStability)
+
+Switch V_Islanding_Detected "Islanding Detected" <alert> (gStability)

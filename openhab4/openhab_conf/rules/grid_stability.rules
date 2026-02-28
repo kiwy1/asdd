@@ -1,0 +1,94 @@
+val NOMINAL_FREQ = 50.0
+val NOMINAL_VOLTAGE = 230.0
+val FREQ_DEVIATION_THRESHOLD = 0.3
+val VOLTAGE_SAG_THRESHOLD = 0.90
+val VOLTAGE_SWELL_THRESHOLD = 1.10
+val THD_THRESHOLD = 5.0
+val ISLANDING_FREQ_DEVIATION = 0.5
+
+rule "Calculate frequency deviation"
+when
+    Item V_Grid_AvgFrequency received update
+then
+    val freq = (V_Grid_AvgFrequency.state as DecimalType)?.doubleValue ?: NOMINAL_FREQ
+    val deviation = Math.abs(freq - NOMINAL_FREQ)
+    V_Freq_Deviation.postUpdate(deviation)
+
+    if (deviation > FREQ_DEVIATION_THRESHOLD) {
+        V_Freq_Deviation_Alert.sendCommand(ON)
+        V_Alert_Frequency.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("Frequency deviation: " + String.format("%.2f", deviation) + " Hz")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else {
+        V_Freq_Deviation_Alert.sendCommand(OFF)
+        V_Alert_Frequency.sendCommand(OFF)
+    }
+end
+
+rule "Calculate voltage sag and swell"
+when
+    Item V_Grid_AvgVoltage received update
+then
+    val v = (V_Grid_AvgVoltage.state as DecimalType)?.doubleValue ?: NOMINAL_VOLTAGE
+    val pct = v / NOMINAL_VOLTAGE * 100.0
+
+    var sagPct = 0.0
+    var swellPct = 0.0
+    if (v < NOMINAL_VOLTAGE * VOLTAGE_SAG_THRESHOLD) {
+        sagPct = (1.0 - v / NOMINAL_VOLTAGE) * 100
+        V_Voltage_Sag_Alert.sendCommand(ON)
+        V_Alert_Voltage.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("Voltage sag: " + String.format("%.1f", v) + " V (" + String.format("%.1f", sagPct) + "% drop)")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else {
+        V_Voltage_Sag_Alert.sendCommand(OFF)
+    }
+    if (v > NOMINAL_VOLTAGE * VOLTAGE_SWELL_THRESHOLD) {
+        swellPct = (v / NOMINAL_VOLTAGE - 1.0) * 100
+        V_Voltage_Swell_Alert.sendCommand(ON)
+        V_Alert_Voltage.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("Voltage swell: " + String.format("%.1f", v) + " V (" + String.format("%.1f", swellPct) + "% rise)")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else {
+        V_Voltage_Swell_Alert.sendCommand(OFF)
+    }
+
+    V_Voltage_Sag.postUpdate(sagPct)
+    V_Voltage_Swell.postUpdate(swellPct)
+end
+
+rule "THD alert"
+when
+    Item V_THD received update
+then
+    val thd = (V_THD.state as DecimalType)?.doubleValue ?: 0.0
+    if (thd > THD_THRESHOLD) {
+        V_THD_Alert.sendCommand(ON)
+        V_Alert_Stability.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("THD exceeds " + String.format("%.1f", thd) + "%")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else {
+        V_THD_Alert.sendCommand(OFF)
+        V_Alert_Stability.sendCommand(OFF)
+    }
+end
+
+rule "Islanding detection (frequency deviation + voltage anomaly)"
+when
+    Item V_Grid_AvgFrequency received update or
+    Item V_Grid_AvgVoltage received update
+then
+    val freq = (V_Grid_AvgFrequency.state as DecimalType)?.doubleValue ?: NOMINAL_FREQ
+    val v = (V_Grid_AvgVoltage.state as DecimalType)?.doubleValue ?: NOMINAL_VOLTAGE
+    val freqDev = Math.abs(freq - NOMINAL_FREQ)
+    val vDev = Math.abs(v - NOMINAL_VOLTAGE) / NOMINAL_VOLTAGE
+
+    if (freqDev > ISLANDING_FREQ_DEVIATION && vDev > 0.08) {
+        V_Islanding_Detected.sendCommand(ON)
+        V_Alert_Emergency.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("Islanding detected: freq=" + String.format("%.2f", freq) + " Hz, V=" + String.format("%.1f", v) + " V")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else {
+        V_Islanding_Detected.sendCommand(OFF)
+    }
+end

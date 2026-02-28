@@ -1,0 +1,14 @@
+Group gAlerts "Alerts" <alert>
+Group gPerformance "Performance" <chart>
+
+Switch V_Alert_Frequency "Freq Alert" <alert> (gAlerts)
+Switch V_Alert_Voltage "Voltage Alert" <alert> (gAlerts)
+Switch V_Alert_Overload "Overload Alert" <alert> (gAlerts)
+Switch V_Alert_Stability "Stability Alert" <alert> (gAlerts)
+Switch V_Alert_Emergency "Emergency Alert" <alert> (gAlerts)
+String V_Alert_LastMessage "Last Alert [%s]" <alert> (gAlerts)
+DateTime V_Alert_LastTime "Last Alert Time" <clock> (gAlerts)
+
+Number V_Perf_RuleExecCount "Rules Exec [%d]" <chart> (gPerformance)
+Number V_Perf_AlertCount "Alerts Count [%d]" <chart> (gPerformance)
+Number V_Perf_ResponseTime "Response Time [%d ms]" <chart> (gPerformance)

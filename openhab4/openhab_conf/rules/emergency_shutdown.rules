@@ -1,0 +1,98 @@
+var String currentState = "NORMAL"
+var Timer recoveryTimer = null
+
+val STRESSED_POWER = 400.0
+val EMERGENCY_POWER = 450.0
+val PEAK_THRESHOLD_KW = 350.0
+val CASCADE_FREQ_DEV = 0.8
+val CASCADE_VOLTAGE = 0.75
+
+rule "Grid State Machine - main logic"
+when
+    Item V_Grid_TotalPower received update or
+    Item V_Grid_AvgFrequency received update or
+    Item V_Grid_AvgVoltage received update or
+    Item V_Islanding_Detected received update or
+    Item V_THD received update
+then
+    val power = (V_Grid_TotalPower.state as DecimalType)?.doubleValue ?: 0
+    val freq = (V_Grid_AvgFrequency.state as DecimalType)?.doubleValue ?: 50.0
+    val v = (V_Grid_AvgVoltage.state as DecimalType)?.doubleValue ?: 230.0
+    val islanding = V_Islanding_Detected.state == ON
+    val freqDev = Math.abs(freq - 50.0)
+    val vPct = v / 230.0
+
+    var String newState = currentState
+
+    if (currentState == "RECOVERY") {
+        if (V_Recovery_Complete.state == ON) {
+            newState = "NORMAL"
+        }
+    } else if (currentState == "EMERGENCY") {
+        if (!islanding && freqDev <= CASCADE_FREQ_DEV && vPct >= CASCADE_VOLTAGE && power < EMERGENCY_POWER) {
+            newState = "RECOVERY"
+            V_Emergency_Shutdown_Active.sendCommand(OFF)
+            V_Emergency_Disconnect.sendCommand(OFF)
+            V_Recovery_InProgress.sendCommand(ON)
+            V_Recovery_Phase.postUpdate(1)
+        }
+    } else if (islanding || freqDev > CASCADE_FREQ_DEV || vPct < CASCADE_VOLTAGE) {
+        newState = "EMERGENCY"
+        V_Emergency_Shutdown_Active.sendCommand(ON)
+        V_Cascade_Prevention_Active.sendCommand(ON)
+        V_Critical_Load_Protected.sendCommand(ON)
+        V_Emergency_Disconnect.sendCommand(ON)
+        V_Alert_Emergency.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("EMERGENCY: Cascade prevention activated")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else if (power >= EMERGENCY_POWER) {
+        newState = "EMERGENCY"
+        V_Emergency_Shutdown_Active.sendCommand(ON)
+        V_Cascade_Prevention_Active.sendCommand(ON)
+        V_Critical_Load_Protected.sendCommand(ON)
+        V_Alert_Overload.sendCommand(ON)
+        V_Alert_LastMessage.postUpdate("EMERGENCY: Overload " + power + " kW")
+        V_Alert_LastTime.postUpdate(now.toString)
+    } else if (power >= STRESSED_POWER || V_PeakDemand_Detected.state == ON) {
+        newState = if (power >= PEAK_THRESHOLD_KW) "PEAK" else "STRESSED"
+        V_Critical_Load_Protected.sendCommand(ON)
+    } else {
+        newState = "NORMAL"
+        V_Emergency_Shutdown_Active.sendCommand(OFF)
+        V_Cascade_Prevention_Active.sendCommand(OFF)
+        V_Critical_Load_Protected.sendCommand(OFF)
+    }
+
+    if (newState != currentState) {
+        currentState = newState
+        V_Grid_State.postUpdate(currentState)
+
+        if (newState == "RECOVERY") {
+            if (recoveryTimer !== null) recoveryTimer.cancel
+            createTimer(now.plusSeconds(5)) [ |
+                V_Recovery_Phase.postUpdate(2)
+            ]
+            createTimer(now.plusSeconds(10)) [ |
+                V_Recovery_Phase.postUpdate(3)
+            ]
+            createTimer(now.plusSeconds(15)) [ |
+                V_Recovery_Phase.postUpdate(4)
+            ]
+            recoveryTimer = createTimer(now.plusSeconds(20)) [ |
+                V_Recovery_Phase.postUpdate(5)
+                V_Recovery_Complete.sendCommand(ON)
+                V_Recovery_InProgress.sendCommand(OFF)
+                V_Grid_State.postUpdate("NORMAL")
+                currentState = "NORMAL"
+            ]
+        }
+    }
+end
+
+rule "Initialize grid state on startup"
+when
+    System started
+then
+    currentState = "NORMAL"
+    V_Grid_State.postUpdate("NORMAL")
+end

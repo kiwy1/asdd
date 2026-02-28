@@ -1,0 +1,84 @@
+sitemap default label="Smart Grid Analytics" {
+    Frame label="Grid State" {
+        Text item=V_Grid_State icon="energy"
+        Text item=V_Grid_TotalPower
+        Text item=V_Grid_AvgVoltage
+        Text item=V_Grid_AvgFrequency
+    }
+    Frame label="Grid Nodes (6)" {
+        Text item=V_Node1_Power
+        Text item=V_Node1_Voltage
+        Text item=V_Node1_Frequency
+        Text item=V_Node2_Power
+        Text item=V_Node2_Voltage
+        Text item=V_Node2_Frequency
+        Text item=V_Node3_Power
+        Text item=V_Node3_Voltage
+        Text item=V_Node3_Frequency
+        Text item=V_Node4_Power
+        Text item=V_Node4_Voltage
+        Text item=V_Node4_Frequency
+        Text item=V_Node5_Power
+        Text item=V_Node5_Voltage
+        Text item=V_Node5_Frequency
+        Text item=V_Node6_Power
+        Text item=V_Node6_Voltage
+        Text item=V_Node6_Frequency
+    }
+    Frame label="Power Flow" {
+        Text item=V_Flow_A_to_B
+        Text item=V_Flow_B_to_C
+        Text item=V_Flow_C_to_D
+        Text item=V_Flow_D_to_E
+        Text item=V_Flow_ZoneBalance
+    }
+    Frame label="Stability" {
+        Text item=V_Freq_Deviation
+        Switch item=V_Freq_Deviation_Alert
+        Text item=V_Voltage_Sag
+        Text item=V_Voltage_Swell
+        Switch item=V_Voltage_Sag_Alert
+        Switch item=V_Voltage_Swell_Alert
+        Text item=V_THD
+        Switch item=V_THD_Alert
+        Switch item=V_Islanding_Detected
+    }
+    Frame label="Demand Response" {
+        Switch item=V_PeakDemand_Detected
+        Text item=V_PeakDemand_Threshold
+        Switch item=V_LoadShed_Active
+        Text item=V_LoadShed_Level
+        Switch item=V_LoadShed_Zone1
+        Switch item=V_LoadShed_Zone2
+        Switch item=V_LoadShed_Zone3
+        Switch item=V_LoadShed_Zone4
+        Switch item=V_LoadShed_Zone5
+        Text item=V_Priority_Critical
+        Text item=V_Priority_High
+        Text item=V_Priority_Medium
+        Text item=V_Priority_Low
+        Text item=V_Priority_Disposable
+    }
+    Frame label="Emergency" {
+        Switch item=V_Emergency_Shutdown_Active
+        Switch item=V_Cascade_Prevention_Active
+        Switch item=V_Critical_Load_Protected
+        Switch item=V_Emergency_Disconnect
+        Switch item=V_Recovery_InProgress
+        Text item=V_Recovery_Phase
+        Switch item=V_Recovery_Complete
+    }
+    Frame label="Alerts" {
+        Switch item=V_Alert_Frequency
+        Switch item=V_Alert_Voltage
+        Switch item=V_Alert_Overload
+        Switch item=V_Alert_Stability
+        Switch item=V_Alert_Emergency
+        Text item=V_Alert_LastMessage
+        Text item=V_Alert_LastTime
+    }
+    Frame label="Performance" {
+        Text item=V_Perf_RuleExecCount
+        Text item=V_Perf_AlertCount
+    }
+}

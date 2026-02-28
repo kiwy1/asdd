@@ -1,0 +1,94 @@
+services:
+  openhab:
+    image: openhab/openhab:5.1.3
+    container_name: oh4-smartgrid
+    restart: always
+    ports:
+      - "8084:8080"
+      - "8447:8443"
+    volumes:
+      - ./openhab_conf:/openhab/conf
+      - openhab4-userdata:/openhab/userdata
+    environment:
+      CRYPTO_POLICY: "unlimited"
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+      TZ: "Europe/Kyiv"
+      JAVA_OPTS: "-Dopenhab.userdata=/openhab/userdata"
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    networks:
+      - smartgrid-net
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: oh4-influxdb
+    restart: always
+    ports:
+      - "8087:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: admin
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_ADMIN_PASSWORD:-smartgrid-admin}
+      DOCKER_INFLUXDB_INIT_ORG: openhab
+      DOCKER_INFLUXDB_INIT_BUCKET: smartgrid
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN:-smartgrid-token-change-me}
+      DOCKER_INFLUXDB_INIT_RETENTION: 52w
+    volumes:
+      - influxdb4-data:/var/lib/influxdb2
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - smartgrid-net
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: oh4-grafana
+    restart: always
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_HTTP_PORT: 3000
+      GF_INSTALL_PLUGINS: ""
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    volumes:
+      - grafana4-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - influxdb
+    networks:
+      - smartgrid-net
+
+  smart-grid-sim:
+    build: ./smart-grid-sim
+    container_name: oh4-smartgrid-sim
+    restart: always
+    environment:
+      OPENHAB_URL: "http://oh4-smartgrid:8080"
+      PUSH_INTERVAL: "2"
+      INFLUXDB_URL: "http://influxdb:8086"
+      INFLUXDB_TOKEN: ${INFLUXDB_TOKEN:-smartgrid-token-change-me}
+      INFLUXDB_ORG: openhab
+      INFLUXDB_BUCKET: smartgrid
+    depends_on:
+      - openhab
+      - influxdb
+    networks:
+      - smartgrid-net
+
+volumes:
+  openhab4-userdata:
+  influxdb4-data:
+  grafana4-data:
+
+networks:
+  smartgrid-net:
+    driver: bridge

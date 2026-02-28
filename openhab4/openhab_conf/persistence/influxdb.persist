@@ -1,0 +1,12 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+}
+
+Items {
+    V_Node1_Power, V_Node2_Power, V_Node3_Power, V_Node4_Power, V_Node5_Power, V_Node6_Power,
+    V_Grid_TotalPower, V_Grid_AvgVoltage, V_Grid_AvgFrequency,
+    V_Freq_Deviation, V_THD, V_Voltage_Sag, V_Voltage_Swell,
+    V_Flow_A_to_B, V_Flow_B_to_C, V_Flow_C_to_D, V_Flow_D_to_E,
+    V_LoadShed_Level, V_Grid_State,
+    V_Perf_RuleExecCount, V_Perf_AlertCount : strategy = everyChange, everyMinute
+}

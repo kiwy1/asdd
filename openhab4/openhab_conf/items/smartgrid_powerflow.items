@@ -1,0 +1,7 @@
+Group gPowerFlow "Power Flow" <energy>
+
+Number:Power V_Flow_A_to_B "A→B [%.1f kW]" <energy> (gPowerFlow)
+Number:Power V_Flow_B_to_C "B→C [%.1f kW]" <energy> (gPowerFlow)
+Number:Power V_Flow_C_to_D "C→D [%.1f kW]" <energy> (gPowerFlow)
+Number:Power V_Flow_D_to_E "D→E [%.1f kW]" <energy> (gPowerFlow)
+Number:Power V_Flow_ZoneBalance "Zone Balance [%.1f kW]" <energy> (gPowerFlow)

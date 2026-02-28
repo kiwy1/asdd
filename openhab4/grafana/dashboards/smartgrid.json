@@ -1,0 +1,35 @@
+{
+  "uid": "smartgrid-dashboard",
+  "title": "Smart Grid Analytics",
+  "tags": ["smartgrid", "openhab"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "panels": [
+    {
+      "datasource": { "type": "influxdb", "uid": "influxdb-smartgrid" },
+      "fieldConfig": {
+        "defaults": { "unit": "kw", "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "red", "value": 350 }] } }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [{
+        "query": "from(bucket: \"smartgrid\") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == \"V_Grid_TotalPower\") |> filter(fn: (r) => r._field == \"value\") |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)",
+        "refId": "A"
+      }],
+      "title": "Grid Total Power",
+      "type": "timeseries"
+    },
+    {
+      "datasource": { "type": "influxdb", "uid": "influxdb-smartgrid" },
+      "fieldConfig": {
+        "defaults": { "unit": "hertz", "thresholds": { "steps": [{ "color": "green", "value": null }, { "color": "yellow", "value": 49.7 }, { "color": "red", "value": 50.3 }] } }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [{
+        "query": "from(bucket: \"smartgrid\") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r._measurement == \"V_Grid_AvgFrequency\") |> filter(fn: (r) => r._field == \"value\") |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: true)",
+        "refId": "A"
+      }],
+      "title": "Avg Frequency",
+      "type": "timeseries"
+    }
+  ]
+}

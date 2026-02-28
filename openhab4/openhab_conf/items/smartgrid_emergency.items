@@ -1,0 +1,12 @@
+Group gEmergency "Emergency Control" <alert>
+
+String V_Grid_State "Grid State [%s]" <settings> (gEmergency)
+
+Switch V_Emergency_Shutdown_Active "Emergency Shutdown" <alert> (gEmergency)
+Switch V_Cascade_Prevention_Active "Cascade Prevention" <alert> (gEmergency)
+Switch V_Critical_Load_Protected "Critical Load Protected" <alert> (gEmergency)
+Switch V_Emergency_Disconnect "Emergency Disconnect" <alert> (gEmergency)
+
+Switch V_Recovery_InProgress "Recovery In Progress" <energy> (gEmergency)
+Number V_Recovery_Phase "Recovery Phase [%d]" <energy> (gEmergency)
+Switch V_Recovery_Complete "Recovery Complete" <energy> (gEmergency)

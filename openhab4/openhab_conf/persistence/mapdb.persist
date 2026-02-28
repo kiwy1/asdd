@@ -1,0 +1,9 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+}
+
+Items {
+    V_Grid_State, V_Grid_TotalPower, V_Grid_AvgVoltage, V_Grid_AvgFrequency,
+    V_LoadShed_Active, V_LoadShed_Level, V_Emergency_Shutdown_Active
+    : strategy = everyChange, everyMinute, restoreOnStartup
+}
