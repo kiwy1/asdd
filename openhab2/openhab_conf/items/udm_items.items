@@ -1,0 +1,12 @@
+Group gUDM_Devices "Universal Device Model" <settings>
+
+Switch UDM_Switch_CoAP "CoAP Switch [%s]" <switch> (gUDM_Devices)
+String UDM_Discovery_CoAP "Discovered Device" (gUDM_Devices)
+String UDM_CoAP_Data "CoAP Data [%s]" (gUDM_Devices)
+
+Number UDM_Sensor_Temperature "Temperature [%.1f °C]" <temperature> (gUDM_Devices)
+Number UDM_Sensor_Humidity "Humidity [%.0f %%]" <humidity> (gUDM_Devices)
+
+Number UDM_HTTP_Temperature "HTTP Sensor Temp [%.1f °C]" <temperature> (gUDM_Devices)
+Number UDM_HTTP_Humidity "HTTP Sensor Humidity [%.0f %%]" <humidity> (gUDM_Devices)
+Switch UDM_HTTP_Switch "HTTP Switch [%s]" <switch> (gUDM_Devices)

@@ -1,0 +1,23 @@
+rule "CoAP Device Discovery"
+when
+    Item UDM_Discovery_CoAP received update
+then
+    val payload = UDM_Discovery_CoAP.state.toString
+    if (payload !== null && payload !== "") {
+        logInfo("udm.discovery", "Device discovered via CoAP: {}", payload)
+    }
+end
+
+rule "System started - Run discovery scan"
+when
+    System started
+then
+    logInfo("udm.discovery", "UDM discovery scan - system started")
+end
+
+rule "Device discovery timer - periodic scan"
+when
+    Time cron "0 */5 * * * ?"  // Every 5 minutes
+then
+    logInfo("udm.discovery", "UDM periodic discovery scan")
+end

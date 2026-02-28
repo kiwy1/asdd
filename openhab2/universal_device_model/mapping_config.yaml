@@ -1,0 +1,30 @@
+version: "1.0"
+
+mappings:
+  mqtt:
+    broker: "mosquitto:1883"
+    topic_pattern: "devices/{profile}_{id}/{channel}"
+    qos: 1
+    retain: false
+    optimizations:
+      - use_retain_for_state
+      - wildcard_subscribe_discovery
+
+  http:
+    base_url: "http://http-device-sim:9999"
+    path_pattern: "/devices/{id}/{channel}"
+    poll_interval_ms: 60000
+    optimizations:
+      - json_response
+      - discovery_endpoint: "/devices"
+
+  coap:
+    bridge: "coap-bridge"
+    mqtt_relay: "devices/coap"
+    optimizations:
+      - observe_for_updates
+      - discovery_via_post
+
+fallback:
+  order: [mqtt, http, coap]
+  timeout_ms: 5000

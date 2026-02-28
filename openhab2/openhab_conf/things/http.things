@@ -1,0 +1,3 @@
+// Universal Device Model - HTTP Binding
+// Protocol Mapping: HTTP REST API
+// Note: HTTP binding uses items directly - see http.items

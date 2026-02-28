@@ -1,0 +1,5 @@
+sitemap udm label="Universal Device Model" {
+    Frame label="Devices" {
+        Group item=gUDM_Devices
+    }
+}

@@ -1,0 +1,62 @@
+1772199926: mosquitto version 2.1.2 starting
+1772199926: Config loaded from /mosquitto/config/mosquitto.conf.
+1772199926: Bridge support available.
+1772199926: Persistence support available.
+1772199926: TLS support available.
+1772199926: TLS-PSK support available.
+1772199926: Websockets support available.
+1772199926: Opening ipv4 listen socket on port 1883.
+1772199926: Opening ipv6 listen socket on port 1883.
+1772199926: Opening ipv4 listen socket on port 9001.
+1772199926: Opening ipv6 listen socket on port 9001.
+1772199926: mosquitto version 2.1.2 running
+1772199927: New connection from 172.19.0.4:48707 on port 1883.
+1772199927: New client connected from 172.19.0.4:48707 as auto-88A38DBD-F681-5150-9832-4786AA33D1D9 (p4, c1, k60).
+1772199997: New connection from 172.19.0.3:56728 on port 1883.
+1772199997: New client connected from 172.19.0.3:56728 as openhab-udm (p4, c1, k60).
+1772201865: Client auto-88A38DBD-F681-5150-9832-4786AA33D1D9 [172.19.0.4:48707] disconnected: connection closed by client.
+1772201868: New connection from 172.19.0.4:50349 on port 1883.
+1772201868: New client connected from 172.19.0.4:50349 as udm-virtual-sim (p4, c1, k60).
+1772201869: New connection from 172.19.0.6:54423 on port 1883.
+1772201869: New client connected from 172.19.0.6:54423 as auto-089EC5B0-6ABA-5BCA-AAC2-A5EC2EDEFCAF (p4, c1, k60).
+1772201922: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1772202717: mosquitto version 2.1.2 terminating
+1772202717: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1772202721: mosquitto version 2.1.2 starting
+1772202721: Config loaded from /mosquitto/config/mosquitto.conf.
+1772202721: Bridge support available.
+1772202721: Persistence support available.
+1772202721: TLS support available.
+1772202721: TLS-PSK support available.
+1772202721: Websockets support available.
+1772202721: Opening ipv4 listen socket on port 1883.
+1772202721: Opening ipv6 listen socket on port 1883.
+1772202721: Opening ipv4 listen socket on port 9001.
+1772202721: Opening ipv6 listen socket on port 9001.
+1772202721: mosquitto version 2.1.2 running
+1772202721: New connection from 172.19.0.5:60995 on port 1883.
+1772202721: New client connected from 172.19.0.5:60995 as udm-virtual-sim (p4, c1, k60).
+1772202721: New connection from 172.19.0.6:59065 on port 1883.
+1772202721: New client connected from 172.19.0.6:59065 as auto-A45440D9-6CD3-D08C-7079-A015F3AD4239 (p4, c1, k60).
+1772202727: New connection from 172.19.0.3:40526 on port 1883.
+1772202727: New client connected from 172.19.0.3:40526 as openhab-udm (p4, c1, k60).
+1772203066: Client udm-virtual-sim [172.19.0.5:60995] disconnected: connection closed by client.
+1772203067: Client auto-A45440D9-6CD3-D08C-7079-A015F3AD4239 [172.19.0.6:59065] disconnected: connection closed by client.
+1772203069: New connection from 172.19.0.6:38241 on port 1883.
+1772203069: New client connected from 172.19.0.6:38241 as udm-virtual-sim (p4, c1, k60).
+1772203069: New connection from 172.19.0.2:35895 on port 1883.
+1772203069: New client connected from 172.19.0.2:35895 as auto-E9AF0F63-6CA4-1B1A-D70C-A17260CF353E (p4, c1, k60).
+1772203435: mosquitto version 2.1.2 terminating
+1772203435: Saving in-memory database to /mosquitto/data//mosquitto.db.
+1772264248: mosquitto version 2.0.22 starting
+1772264248: Config loaded from /mosquitto/config/mosquitto.conf.
+1772264248: Opening ipv4 listen socket on port 1883.
+1772264248: Opening ipv6 listen socket on port 1883.
+1772264248: Opening websockets listen socket on port 9001.
+1772264248: mosquitto version 2.0.22 running
+1772264248: New connection from 172.18.0.5:48327 on port 1883.
+1772264248: New client connected from 172.18.0.5:48327 as udm-virtual-sim (p2, c1, k60).
+1772264248: New connection from 172.18.0.4:34885 on port 1883.
+1772264248: New client connected from 172.18.0.4:34885 as auto-8260863A-7FC4-448B-D86E-634A54AEBE4D (p2, c1, k60).
+1772264278: New connection from 172.18.0.6:58118 on port 1883.
+1772264278: New client connected from 172.18.0.6:58118 as openhab-udm (p2, c1, k60).

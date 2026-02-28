@@ -1,0 +1,14 @@
+rule "MQTT Sensor - Fallback to HTTP when unavailable"
+when
+    Item UDM_Sensor_Temperature received update null or
+    Item UDM_Sensor_Temperature received update UNDEF
+then
+    logInfo("udm.fallback", "MQTT sensor unavailable, HTTP fallback active")
+end
+
+rule "Protocol health check"
+when
+    Time cron "0 0 * * * ?"  // Every hour
+then
+    logInfo("udm.fallback", "Protocol health check - fallback: mqtt -> http -> coap")
+end

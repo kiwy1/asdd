@@ -1,0 +1,3 @@
+// Universal Device Model - Template Rules
+// Template instantiation and parameter customization
+// Templates: switch, sensor, light (see scripts/template_engine.js)

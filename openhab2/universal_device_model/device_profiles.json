@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "description": "Universal Device Model - Abstract protocol-agnostic device profiles",
+  "profiles": {
+    "switch": {
+      "capabilities": ["on_off", "state"],
+      "channels": {
+        "power": {
+          "type": "Switch",
+          "mqtt_topic": "state",
+          "http_path": "power",
+          "coap_resource": "0/0"
+        },
+        "state": {
+          "type": "String",
+          "mqtt_topic": "state",
+          "http_path": "status",
+          "coap_resource": "0/1"
+        }
+      },
+      "version": "1.0"
+    },
+    "sensor": {
+      "capabilities": ["measurement", "temperature", "humidity"],
+      "channels": {
+        "temperature": {
+          "type": "Number",
+          "unit": "°C",
+          "mqtt_topic": "temp",
+          "http_path": "temperature",
+          "coap_resource": "3303/0"
+        },
+        "humidity": {
+          "type": "Number",
+          "unit": "%",
+          "mqtt_topic": "humidity",
+          "http_path": "humidity",
+          "coap_resource": "3304/0"
+        }
+      },
+      "version": "1.0"
+    },
+    "light": {
+      "capabilities": ["on_off", "dimmer", "color"],
+      "channels": {
+        "power": {
+          "type": "Switch",
+          "mqtt_topic": "state",
+          "http_path": "on",
+          "coap_resource": "0/0"
+        },
+        "brightness": {
+          "type": "Dimmer",
+          "mqtt_topic": "brightness",
+          "http_path": "brightness",
+          "coap_resource": "0/1"
+        }
+      },
+      "version": "1.0"
+    }
+  },
+  "protocol_fallback": ["mqtt", "http", "coap"]
+}

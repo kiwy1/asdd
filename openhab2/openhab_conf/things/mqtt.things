@@ -1,0 +1,27 @@
+Bridge mqtt:broker:udmBroker "Universal Device Model Broker" [ host="mosquitto", port=1883, secure=false, clientID="openhab-udm" ] {
+
+    Thing mqtt:topic:coapSwitch "CoAP Bridge Switch" {
+        Channels:
+            Type switch : power "Power" [
+                stateTopic="devices/coap_switch_power",
+                commandTopic="devices/coap_switch_power/set",
+                on="ON", off="OFF"
+            ]
+    }
+
+    Thing mqtt:topic:sensor1 "MQTT Sensor" {
+        Channels:
+            Type number : temperature "Temperature" [ stateTopic="devices/mqtt_sensor/temp", transformationPattern="REGEX:([0-9.]+).*" ]
+            Type number : humidity "Humidity" [ stateTopic="devices/mqtt_sensor/humidity" ]
+    }
+
+    Thing mqtt:topic:coapDiscovery "CoAP Device Discovery" {
+        Channels:
+            Type string : discovery "Discovery" [ stateTopic="devices/coap/discovery/+" ]
+    }
+
+    Thing mqtt:topic:coapData "CoAP Sensor Data" {
+        Channels:
+            Type string : data "Data" [ stateTopic="devices/coap/devices" ]
+    }
+}
