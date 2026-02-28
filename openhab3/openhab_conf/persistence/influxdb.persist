@@ -1,0 +1,11 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+}
+
+Items {
+    V_Temp_Living, V_Temp_Bedroom, V_Temp_Kitchen,
+    V_Hum_Living, V_Hum_Bedroom,
+    V_Light_Bedroom, V_Switch_Kitchen,
+    V_Power_Consumption, V_CO2_Level,
+    V_Temp_Avg, V_Hum_Avg, V_Comfort_Index : strategy = everyChange, everyMinute, restoreOnStartup
+}

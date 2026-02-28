@@ -1,0 +1,5 @@
+Group gDerivedMetrics "Derived Metrics" <chart>
+
+Number:Temperature V_Temp_Avg  "Avg Temperature [%.1f °C]" <temperature> (gDerivedMetrics) { influxdb="derived" [metric="temp_avg"] }
+Number:Dimensionless V_Hum_Avg "Avg Humidity [%.0f %%]"    <humidity> (gDerivedMetrics) { influxdb="derived" [metric="hum_avg"] }
+Number V_Comfort_Index "Comfort Index [%.2f]" <energy> (gDerivedMetrics) { influxdb="derived" [metric="comfort"] }

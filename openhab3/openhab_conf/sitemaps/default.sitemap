@@ -1,0 +1,18 @@
+sitemap default label="OpenHAB IoT" {
+    Frame label="Virtual Sensors" {
+        Text item=V_Temp_Living
+        Text item=V_Temp_Bedroom
+        Text item=V_Temp_Kitchen
+        Text item=V_Hum_Living
+        Text item=V_Hum_Bedroom
+        Slider item=V_Light_Bedroom
+        Switch item=V_Switch_Kitchen
+        Text item=V_Power_Consumption
+        Text item=V_CO2_Level
+    }
+    Frame label="Derived Metrics" {
+        Text item=V_Temp_Avg
+        Text item=V_Hum_Avg
+        Text item=V_Comfort_Index
+    }
+}

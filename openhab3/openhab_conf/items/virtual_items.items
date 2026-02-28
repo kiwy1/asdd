@@ -1,0 +1,14 @@
+Group gVirtualSensors "Virtual IoT Sensors" <settings>
+
+Number:Temperature V_Temp_Living   "Living Room Temp [%.1f °C]"  <temperature> (gVirtualSensors) { influxdb="temperature" [room="living", floor="ground"] }
+Number:Temperature V_Temp_Bedroom  "Bedroom Temp [%.1f °C]"     <temperature> (gVirtualSensors) { influxdb="temperature" [room="bedroom", floor="first"] }
+Number:Temperature V_Temp_Kitchen  "Kitchen Temp [%.1f °C]"     <temperature> (gVirtualSensors) { influxdb="temperature" [room="kitchen", floor="ground"] }
+
+Number:Dimensionless V_Hum_Living   "Living Humidity [%.0f %%]"  <humidity> (gVirtualSensors) { influxdb="humidity" [room="living", floor="ground"] }
+Number:Dimensionless V_Hum_Bedroom  "Bedroom Humidity [%.0f %%]" <humidity> (gVirtualSensors) { influxdb="humidity" [room="bedroom", floor="first"] }
+
+Dimmer V_Light_Bedroom  "Bedroom Light [%d %%]" <slider> (gVirtualSensors) { influxdb="light" [room="bedroom"] }
+Switch V_Switch_Kitchen "Kitchen Switch [%s]"    <switch> (gVirtualSensors) { influxdb="power" [room="kitchen"] }
+
+Number:Power V_Power_Consumption "Power [%.1f W]" <energy> (gVirtualSensors) { influxdb="power_consumption" [metric="watt"] }
+Number V_CO2_Level "CO2 [%.0f ppm]" <co2> (gVirtualSensors) { influxdb="air_quality" [metric="co2"] }

@@ -1,0 +1,27 @@
+rule "Calculate derived metrics - Temperature and Humidity averages"
+when
+    Item V_Temp_Living received update or
+    Item V_Temp_Bedroom received update or
+    Item V_Temp_Kitchen received update or
+    Item V_Hum_Living received update or
+    Item V_Hum_Bedroom received update or
+    Time cron "0 * * * * ?"  // Also every minute
+then
+    val tempLiving = (V_Temp_Living.state as Number) ?: 0
+    val tempBedroom = (V_Temp_Bedroom.state as Number) ?: 0
+    val tempKitchen = (V_Temp_Kitchen.state as Number) ?: 0
+    val humLiving = (V_Hum_Living.state as Number) ?: 0
+    val humBedroom = (V_Hum_Bedroom.state as Number) ?: 0
+
+    val tempAvg = (tempLiving + tempBedroom + tempKitchen) / 3.0
+    val humAvg = (humLiving + humBedroom) / 2.0
+
+    V_Temp_Avg.postUpdate(tempAvg)
+    V_Hum_Avg.postUpdate(humAvg)
+
+    // Comfort index: simple formula (temp 20-24°C + humidity 40-60% = ideal)
+    val tempScore = 1.0 - Math.abs(tempAvg - 22) / 10
+    val humScore = 1.0 - Math.abs(humAvg - 50) / 50
+    val comfort = Math.max(0, Math.min(1, (tempScore + humScore) / 2))
+    V_Comfort_Index.postUpdate(comfort)
+end

@@ -201,3 +201,129 @@ Provide a thing type ID and a thing ID in this format:
 2026-02-28 09:46:50.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
 2026-02-28 09:46:51.037 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
 2026-02-28 09:46:56.050 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:00.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:01.063 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:06.076 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:10.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:11.090 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:16.104 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:20.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:21.116 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:26.128 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:30.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:31.142 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:36.154 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:40.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:41.168 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:46.181 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:50.725 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:47:51.192 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:47:56.205 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:00.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:01.219 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:06.232 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:10.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:11.247 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:16.261 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:20.725 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:21.273 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:26.285 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:30.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:31.301 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:36.312 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:40.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:41.325 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:46.343 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:50.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:48:51.355 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:48:56.368 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:00.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:01.382 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:06.395 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:10.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:11.409 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:16.422 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:20.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:21.433 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:26.446 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:30.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:31.459 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:36.471 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:40.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:41.485 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:46.497 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:50.726 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:49:51.511 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:49:56.523 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:00.297 [INFO ] [nhab.core.model.script.udm.discovery] - UDM periodic discovery scan
+2026-02-28 09:50:00.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:01.536 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:06.549 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:10.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:11.561 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:16.577 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:20.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:21.591 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:26.604 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:30.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:31.617 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:36.631 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:40.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:41.644 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:46.657 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:50.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:50:51.669 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:50:56.682 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:00.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:01.696 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:06.711 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:10.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:11.726 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:16.738 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:20.727 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:21.750 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:26.762 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:30.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:31.776 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:36.789 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:40.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:41.801 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:46.814 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:50.728 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:51:51.826 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:51:56.840 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:00.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:01.854 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:06.868 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:10.730 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:11.887 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:16.899 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:20.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:21.910 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:26.923 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:30.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:31.937 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:36.949 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:40.730 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:41.968 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:46.982 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:50.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:52:51.993 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:52:57.006 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:00.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:53:02.019 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:07.032 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:10.730 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:53:12.045 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:17.059 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:20.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:53:22.071 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:27.085 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:30.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:53:32.097 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:37.111 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:40.729 [WARN ] [nelTransformation$TransformationStep] - Failed to use TransformationStep{serviceName='REGEX', function='([0-9.]+).*'}, service not found
+2026-02-28 09:53:42.125 [INFO ] [nhab.core.model.script.udm.discovery] - Device discovered via CoAP: {"id":"sensor1","profile":"sensor"}
+2026-02-28 09:53:47.586 [INFO ] [basic.internal.servlet.WebAppServlet] - Stopped Basic UI
+2026-02-28 09:53:48.126 [INFO ] [el.core.internal.ModelRepositoryImpl] - Unloading DSL model 'template_items.items'
+2026-02-28 09:53:48.126 [INFO ] [el.core.internal.ModelRepositoryImpl] - Unloading DSL model 'udm_items.items'

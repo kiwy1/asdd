@@ -1,0 +1,18 @@
+apiVersion: 1
+contactPoints:
+  - orgId: 1
+    name: webhook-default
+    receivers:
+      - uid: webhook-uid
+        type: webhook
+        settings:
+          url: http://host.docker.internal:9999/webhook
+          httpMethod: POST
+  - orgId: 1
+    name: email-simulation
+    receivers:
+      - uid: email-sim-uid
+        type: email
+        settings:
+          addresses: "alert@example.com"
+          singleEmail: true

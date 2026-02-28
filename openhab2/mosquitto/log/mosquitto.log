@@ -60,3 +60,8 @@
 1772264248: New client connected from 172.18.0.4:34885 as auto-8260863A-7FC4-448B-D86E-634A54AEBE4D (p2, c1, k60).
 1772264278: New connection from 172.18.0.6:58118 on port 1883.
 1772264278: New client connected from 172.18.0.6:58118 as openhab-udm (p2, c1, k60).
+1772265227: Client udm-virtual-sim closed its connection.
+1772265227: Client openhab-udm disconnected.
+1772265237: Client auto-8260863A-7FC4-448B-D86E-634A54AEBE4D closed its connection.
+1772265237: mosquitto version 2.0.22 terminating
+1772265237: Saving in-memory database to /mosquitto/data//mosquitto.db.
