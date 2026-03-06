@@ -1,0 +1,52 @@
+rule "Lighting: Living follows master"
+when
+    Item vLiving_Light received command
+then
+    if (receivedCommand == ON) {
+        vLiving_Dimmer.sendCommand(100)
+    } else {
+        vLiving_Dimmer.sendCommand(0)
+    }
+end
+
+rule "Lighting: Bedroom follows master"
+when
+    Item vBedroom_Light received command
+then
+    if (receivedCommand == ON) {
+        vBedroom_Dimmer.sendCommand(100)
+    } else {
+        vBedroom_Dimmer.sendCommand(0)
+    }
+end
+
+rule "Climate: Heating off when cooling on"
+when
+    Item vCooling received command ON
+then
+    vHeating.sendCommand(OFF)
+end
+
+rule "Climate: Cooling off when heating on"
+when
+    Item vHeating received command ON
+then
+    vCooling.sendCommand(OFF)
+end
+
+rule "Security: Alarm trigger on door/window open when armed"
+when
+    Item vDoor_Contact changed to OPEN or
+    Item vWindow_Contact changed to OPEN
+then
+    if (vAlarm_Armed.state == ON) {
+        vAlarm_Triggered.sendCommand(ON)
+    }
+end
+
+rule "Security: Reset alarm"
+when
+    Item vAlarm_Armed received command OFF
+then
+    vAlarm_Triggered.sendCommand(OFF)
+end

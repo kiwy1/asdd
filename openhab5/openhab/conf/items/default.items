@@ -1,0 +1,28 @@
+Group gLiving       "Living"
+Group gBedroom     "Bedroom"
+Group gLighting    "Lighting" (gLiving, gBedroom)
+Group gClimate     "Climate"
+Group gSecurity    "Security"
+Group gSystem      "System"
+
+Switch  vLiving_Light    "Living Light"     (gLiving, gLighting)
+Dimmer  vLiving_Dimmer   "Living Dimmer [%d %%]" (gLiving, gLighting)
+Switch  vBedroom_Light   "Bedroom Light"    (gBedroom, gLighting)
+Dimmer  vBedroom_Dimmer  "Bedroom Dimmer [%d %%]" (gBedroom, gLighting)
+Switch  vHall_Light      "Hall Light"      (gLighting)
+
+Number  vTemperature    "Temperature [%.1f °C]" (gClimate)
+Number  vHumidity       "Humidity [%d %%]" (gClimate)
+Switch  vHeating        "Heating"          (gClimate)
+Switch  vCooling        "Cooling"          (gClimate)
+
+Contact vDoor_Contact    "Door [%s]"        (gSecurity)
+Contact vWindow_Contact  "Window [%s]"      (gSecurity)
+Switch  vAlarm_Armed     "Alarm Armed"      (gSecurity)
+Switch  vAlarm_Triggered "Alarm Triggered"  (gSecurity)
+
+String  vGateway_Status   "Gateway Status"  (gSystem)
+String  vOffline_Mode     "Offline Mode [%s]" (gSystem)
+DateTime vLast_Backup     "Last Backup"     (gSystem)
+Switch  vManual_Backup   "Trigger Backup"   (gSystem)
+Number  vRules_Active    "Rules Active"     (gSystem)

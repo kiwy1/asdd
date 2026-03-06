@@ -1,0 +1,23 @@
+rule "Sync virtual dimmers with switches"
+when
+    Member of gLighting changed
+then
+    val itemName = triggeringItem.name
+    if (itemName.contains("Dimmer") && triggeringItem.state instanceof Number) {
+        val sw = itemName.replace("Dimmer", "Light")
+        val swItem = gLighting.members.findFirst[ it.name == sw ]
+        if (swItem !== null) {
+            val onOff = (triggeringItem.state as Number).intValue > 0 ? ON : OFF
+            if (swItem.state != onOff) swItem.sendCommand(onOff)
+        }
+    }
+end
+
+rule "Virtual temperature limits (local logic)"
+when
+    Item vTemperature changed
+then
+    val t = (vTemperature.state as Number).doubleValue
+    if (t < 15 && vHeating.state != ON) vHeating.sendCommand(ON)
+    if (t > 25 && vCooling.state != ON) vCooling.sendCommand(ON)
+end

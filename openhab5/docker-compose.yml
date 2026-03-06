@@ -1,0 +1,51 @@
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: edge-mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - edge-net
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/broker/uptime", "-C", "1", "-W", "3"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  openhab:
+    image: openhab/openhab:5.1.3
+    container_name: edge-openhab
+    restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    volumes:
+      - ./openhab/conf:/openhab/conf
+      - openhab_userdata:/openhab/userdata
+      - ./openhab/addons:/openhab/addons
+    environment:
+      TZ: Europe/Kyiv
+      CRYPTO_POLICY: unlimited
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+      JAVA_OPTS: "-Duser.timezone=Europe/Kyiv -Xmx256m -Xms64m"
+      OPENHAB_LOGDIR: /openhab/userdata/logs
+    networks:
+      - edge-net
+
+volumes:
+  openhab_userdata:
+    driver: local
+
+networks:
+  edge-net:
+    driver: bridge

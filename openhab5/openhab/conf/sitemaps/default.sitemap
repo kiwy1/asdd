@@ -1,0 +1,28 @@
+sitemap default label="Edge Dashboard" {
+    Frame label="Lighting" {
+        Switch item=vLiving_Light
+        Slider item=vLiving_Dimmer
+        Switch item=vBedroom_Light
+        Slider item=vBedroom_Dimmer
+        Switch item=vHall_Light
+    }
+    Frame label="Climate" {
+        Text item=vTemperature
+        Text item=vHumidity
+        Switch item=vHeating
+        Switch item=vCooling
+    }
+    Frame label="Security" {
+        Text item=vDoor_Contact
+        Text item=vWindow_Contact
+        Switch item=vAlarm_Armed
+        Text item=vAlarm_Triggered
+    }
+    Frame label="System (Offline-safe)" {
+        Text item=vGateway_Status
+        Text item=vOffline_Mode
+        Text item=vLast_Backup
+        Switch item=vManual_Backup
+        Text item=vRules_Active
+    }
+}

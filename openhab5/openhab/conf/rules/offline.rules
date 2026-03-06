@@ -1,0 +1,36 @@
+var Timer offlineCheckTimer = null
+val int OFFLINE_CHECK_INTERVAL = 60
+
+rule "System started - set gateway status and start offline check"
+when
+    System started
+then
+    vGateway_Status.postUpdate("ONLINE")
+    vOffline_Mode.postUpdate("No")
+    vRules_Active.postUpdate(1)
+    if (offlineCheckTimer !== null) offlineCheckTimer.cancel
+    offlineCheckTimer = createTimer(now.plusSeconds(10)) [ |
+        runOfflineCheck()
+    ]
+end
+
+rule "Offline check timer"
+when
+    Time cron "0 */1 * * * ?"
+then
+    runOfflineCheck()
+end
+
+def void runOfflineCheck() {
+    vGateway_Status.postUpdate("LOCAL")
+    vOffline_Mode.postUpdate("No")
+}
+
+rule "Manual backup trigger"
+when
+    Item vManual_Backup received command ON
+then
+    vLast_Backup.postUpdate(now.toString())
+    vManual_Backup.sendCommand(OFF)
+    logInfo("Edge", "Local backup timestamp updated - data stored in userdata")
+end

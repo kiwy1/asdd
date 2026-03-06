@@ -1,0 +1,13 @@
+Strategies {
+    everyMinute : "0 * * * * ?"
+    every5Minutes : "0 */5 * * * ?"
+    everyHour : "0 0 * * * ?"
+    default = everyChange
+}
+
+Items {
+    gClimate* : strategy = every5Minutes, everyChange
+    gLighting* : strategy = everyChange
+    gSecurity* : strategy = everyChange
+    vGateway_Status, vOffline_Mode, vLast_Backup, vRules_Active : strategy = everyChange, every5Minutes
+}

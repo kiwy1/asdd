@@ -1,0 +1,7 @@
+Bridge mqtt:broker:localbroker "Local MQTT Broker" @ "Edge Gateway" [
+    host="mosquitto",
+    port=1883,
+    clientID="openhab-edge",
+    secure=false
+] {
+}

@@ -1,0 +1,10 @@
+Strategies {
+    default = everyChange
+}
+
+Items {
+    gLighting* : strategy = everyChange
+    gClimate* : strategy = everyChange
+    gSecurity* : strategy = everyChange
+    gSystem* : strategy = everyChange
+}
