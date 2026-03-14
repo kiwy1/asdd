@@ -1,0 +1,42 @@
+// ============================================================
+// Віртуальні Items з симуляцією — Anomaly Detection System
+// Всі сенсори віртуальні, оновлюються правилами симуляції
+// ============================================================
+
+// --- Групи ---
+Group gSensors       "Сенсори (віртуальні)"
+Group gAnomaly       "Anomaly Detection"
+Group gSimulation    "Симуляція"
+Group gAlerts        "Алерти"
+
+// --- Віртуальні сенсори (симульовані) — джерела для ML ---
+Number  vSensor_Temperature   "Температура [%.1f °C]"   (gSensors, gSimulation)
+Number  vSensor_Humidity      "Вологість [%.1f %%]"     (gSensors, gSimulation)
+Number  vSensor_Power         "Потужність [%.1f W]"     (gSensors, gSimulation)
+Number  vSensor_Load          "Навантаження [%.1f %%]"  (gSensors, gSimulation)
+Number  vSensor_Noise         "Шум (симуляція) [%.2f]"  (gSensors, gSimulation)
+
+// --- Симуляція: режим та інжекція аномалій ---
+Switch  vSimulation_Enabled   "Симуляція увімкнена"     (gSimulation) 
+Number  vSimulation_AnomalyInject "Інжектувати аномалію (0=ні, 1=спайк, 2=дрифт)" (gSimulation)
+
+// --- Baseline / Normal behavior (результати навчання) ---
+Number  vBaseline_Temperature_Mean "Baseline Temp mean [%.2f]" (gAnomaly)
+Number  vBaseline_Temperature_Std  "Baseline Temp std [%.2f]"  (gAnomaly)
+Number  vBaseline_Humidity_Mean    "Baseline Humidity mean [%.2f]" (gAnomaly)
+Number  vBaseline_Humidity_Std     "Baseline Humidity std [%.2f]"  (gAnomaly)
+
+// --- Adaptive thresholds ---
+Number  vThreshold_ZScore     "Z-Score поріг [%.2f]"   (gAnomaly)
+Number  vThreshold_Dynamic   "Динамічний поріг [%.2f]" (gAnomaly)
+
+// --- Anomaly detection output ---
+Number  vAnomaly_Score        "Anomaly Score [%.3f]"   (gAnomaly, gAlerts)
+String  vAnomaly_Severity     "Severity [%s]"          (gAnomaly, gAlerts)  // NORMAL, LOW, MEDIUM, HIGH, CRITICAL
+Switch  vAnomaly_Alert        "Anomaly Alert"          (gAnomaly, gAlerts)
+String  vAnomaly_Explanation  "Пояснення [%s]"         (gAnomaly, gAlerts)
+DateTime vAnomaly_LastTime    "Остання аномалія"       (gAnomaly, gAlerts)
+
+// --- Alert deduplication / rate limiting ---
+Number  vAlert_Count_1h       "Алертів за годину"       (gAlerts)
+Switch  vAlert_Silence       "Тиша алертів"           (gAlerts)

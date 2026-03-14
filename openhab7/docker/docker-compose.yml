@@ -1,0 +1,170 @@
+# OpenHAB Ecosystem Stack - Variant 1: Docker Compose
+# Services: OpenHAB, InfluxDB, Grafana, Mosquitto MQTT, Nginx, Virtual Sim
+# Network: openhab-net (DNS service discovery)
+# Run: docker compose -f docker/docker-compose.yml -p openhab7 up -d
+
+name: openhab7
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: openhab7-mosquitto
+    restart: unless-stopped
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+      - "${MQTT_WS_PORT:-9001}:9001"
+    volumes:
+      - ../mosquitto/config:/mosquitto/config:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/broker/uptime", "-C", "1", "-W", "3"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    env_file: ../.env
+
+  influxdb:
+    image: influxdb:2.7
+    container_name: openhab7-influxdb
+    restart: unless-stopped
+    ports:
+      - "${INFLUXDB_PORT:-8086}:8086"
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: setup
+      DOCKER_INFLUXDB_INIT_USERNAME: ${INFLUXDB_ADMIN_USER:-admin}
+      DOCKER_INFLUXDB_INIT_PASSWORD: ${INFLUXDB_ADMIN_PASSWORD}
+      DOCKER_INFLUXDB_INIT_ORG: ${INFLUXDB_ORG:-openhab}
+      DOCKER_INFLUXDB_INIT_BUCKET: ${INFLUXDB_BUCKET:-openhab}
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: ${INFLUXDB_TOKEN}
+      DOCKER_INFLUXDB_INIT_RETENTION: ${INFLUXDB_RETENTION:-52w}
+    volumes:
+      - influxdb_data:/var/lib/influxdb2
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD", "influx", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    env_file: ../.env
+
+  openhab:
+    image: openhab/openhab:4.2.1
+    container_name: openhab7-openhab
+    restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+      influxdb:
+        condition: service_healthy
+    ports:
+      - "${OPENHAB_HTTP_PORT:-8080}:8080"
+      - "${OPENHAB_HTTPS_PORT:-8443}:8443"
+    volumes:
+      - ../openhab/conf:/openhab/conf
+      - openhab_userdata:/openhab/userdata
+    environment:
+      TZ: ${TZ:-Europe/Kyiv}
+      CRYPTO_POLICY: unlimited
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+      JAVA_OPTS: "-Duser.timezone=${TZ:-Europe/Kyiv} -Xmx512m -Xms128m"
+      USER_ID: "9001"
+      GROUP_ID: "9001"
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8080/rest/items?limit=1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    env_file: ../.env
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: openhab7-grafana
+    restart: unless-stopped
+    depends_on:
+      influxdb:
+        condition: service_healthy
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_SERVER_HTTP_PORT: 3000
+      GF_INSTALL_PLUGINS: ""
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+      GF_PATHS_DATA: /var/lib/grafana
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ../grafana/provisioning:/etc/grafana/provisioning:ro
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:3000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    env_file: ../.env
+
+  virtual-sim:
+    build:
+      context: ../virtual-sim
+      dockerfile: Dockerfile
+    container_name: openhab7-virtual-sim
+    restart: unless-stopped
+    depends_on:
+      openhab:
+        condition: service_healthy
+    environment:
+      OPENHAB_URL: http://openhab:8080
+      PUSH_INTERVAL: ${SIM_INTERVAL:-10}
+    networks:
+      - openhab-net
+    env_file: ../.env
+
+  nginx:
+    image: nginx:alpine
+    container_name: openhab7-nginx
+    restart: unless-stopped
+    depends_on:
+      - openhab
+      - grafana
+    ports:
+      - "${NGINX_HTTP_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    volumes:
+      - ../nginx/conf.d:/etc/nginx/conf.d:ro
+      - ../nginx/certs:/etc/nginx/certs:ro
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD", "nginx", "-t"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  openhab_userdata:
+    driver: local
+  influxdb_data:
+    driver: local
+  grafana_data:
+    driver: local
+  mosquitto_config:
+    driver: local
+  mosquitto_data:
+    driver: local
+  mosquitto_log:
+    driver: local
+
+networks:
+  openhab-net:
+    driver: bridge
+    name: openhab7-net

@@ -1,0 +1,62 @@
+// Smart City Waste Management — віртуальні Items (симуляція через MQTT)
+// 10 контейнерів: заповненість 0–100%, GPS координати
+
+Group gWasteContainers "Waste Containers (Virtual)" <recycle>
+Group gWasteFillOnly "Fill levels only" (gWasteContainers)
+Group gWasteCritical "Containers >70% (Critical)" <recycle>
+Group gWasteWarning "Containers 30–70% (Warning)" <recycle>
+Group gWasteOk "Containers <30% (OK)" <recycle>
+
+// Container 01 - Central Square
+Number W_Fill_01 "Container 01 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container01:fill" }
+Number W_Lat_01 "Container 01 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container01:lat" }
+Number W_Lon_01 "Container 01 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container01:lon" }
+
+// Container 02 - Railway Station
+Number W_Fill_02 "Container 02 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container02:fill" }
+Number W_Lat_02 "Container 02 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container02:lat" }
+Number W_Lon_02 "Container 02 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container02:lon" }
+
+// Container 03 - City Park
+Number W_Fill_03 "Container 03 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container03:fill" }
+Number W_Lat_03 "Container 03 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container03:lat" }
+Number W_Lon_03 "Container 03 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container03:lon" }
+
+// Container 04 - Market
+Number W_Fill_04 "Container 04 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container04:fill" }
+Number W_Lat_04 "Container 04 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container04:lat" }
+Number W_Lon_04 "Container 04 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container04:lon" }
+
+// Container 05 - University
+Number W_Fill_05 "Container 05 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container05:fill" }
+Number W_Lat_05 "Container 05 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container05:lat" }
+Number W_Lon_05 "Container 05 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container05:lon" }
+
+// Container 06 - Hospital
+Number W_Fill_06 "Container 06 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container06:fill" }
+Number W_Lat_06 "Container 06 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container06:lat" }
+Number W_Lon_06 "Container 06 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container06:lon" }
+
+// Container 07 - Stadium
+Number W_Fill_07 "Container 07 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container07:fill" }
+Number W_Lat_07 "Container 07 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container07:lat" }
+Number W_Lon_07 "Container 07 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container07:lon" }
+
+// Container 08 - Shopping Mall
+Number W_Fill_08 "Container 08 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container08:fill" }
+Number W_Lat_08 "Container 08 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container08:lat" }
+Number W_Lon_08 "Container 08 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container08:lon" }
+
+// Container 09 - Bus Depot
+Number W_Fill_09 "Container 09 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container09:fill" }
+Number W_Lat_09 "Container 09 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container09:lat" }
+Number W_Lon_09 "Container 09 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container09:lon" }
+
+// Container 10 - Residential Block
+Number W_Fill_10 "Container 10 Fill [%d %%]" <recycle> (gWasteContainers, gWasteFillOnly) { channel="mqtt:topic:wastebroker:container10:fill" }
+Number W_Lat_10 "Container 10 Lat [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container10:lat" }
+Number W_Lon_10 "Container 10 Lon [%.4f]" <location> (gWasteContainers) { channel="mqtt:topic:wastebroker:container10:lon" }
+
+// Агреговані метрики (для правил)
+Number W_AverageFill "Average Fill Level [%.0f %%]" <chart> (gWasteContainers)
+Number W_CriticalCount "Containers Critical (>70%)" <recycle> (gWasteContainers)

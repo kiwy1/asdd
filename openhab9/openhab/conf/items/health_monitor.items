@@ -1,0 +1,22 @@
+// Віртуальні Items — носимий пристрій моніторингу здоров'я (PIA, Варіант 1)
+// Симуляція: серцевий ритм, активність, сон, геолокація
+
+Group gHealthMonitor "Health Monitor (Virtual)" <settings>
+
+// --- Серцевий ритм (Heart Rate) ---
+Number V_HeartRate "Heart Rate [%d bpm]" <heating> (gHealthMonitor)
+
+// --- Рівень активності (Activity Level) ---
+String V_ActivityLevel "Activity [%s]" <flow> (gHealthMonitor)
+Number V_ActivityScore "Activity Score [%.0f %%]" <chart> (gHealthMonitor)
+
+// --- Сон (Sleep) ---
+Number V_SleepDuration "Sleep Duration [%.1f h]" <moon> (gHealthMonitor)
+String V_SleepPhase "Sleep Phase [%s]" <moon> (gHealthMonitor)
+Number V_SleepQuality "Sleep Quality [%.0f %%]" <moon> (gHealthMonitor)
+
+// --- Геолокація (Geolocation) ---
+Location V_Geolocation "Location [%2$s°N, %3$s°E]" <location> (gHealthMonitor)
+Number V_LocationLat "Latitude [%.4f]" <location> (gHealthMonitor)
+Number V_LocationLon "Longitude [%.4f]" <location> (gHealthMonitor)
+Number V_LocationAlt "Altitude [%.0f m]" <location> (gHealthMonitor)

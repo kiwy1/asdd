@@ -1,0 +1,117 @@
+// ============================================================
+// Anomaly Detection — Z-score, adaptive thresholds, alerts
+// Інтеграція з persistence для baseline та outlier detection
+// ============================================================
+
+val BASELINE_HOURS = 24
+val Z_THRESHOLD_DEFAULT = 2.5
+
+rule "Anomaly: initial defaults on startup"
+when
+    System started
+then
+    if (vBaseline_Temperature_Mean.state == NULL) {
+        vBaseline_Temperature_Mean.postUpdate(21.0)
+        vBaseline_Temperature_Std.postUpdate(0.5)
+    }
+    if (vBaseline_Humidity_Mean.state == NULL) {
+        vBaseline_Humidity_Mean.postUpdate(45.0)
+        vBaseline_Humidity_Std.postUpdate(5.0)
+    }
+    if (vThreshold_ZScore.state == NULL) {
+        vThreshold_ZScore.postUpdate(Z_THRESHOLD_DEFAULT)
+    }
+    vAnomaly_Score.postUpdate(0.0)
+    vAnomaly_Severity.postUpdate("NORMAL")
+    vAnomaly_Explanation.postUpdate("Ініціалізація baseline")
+end
+
+rule "Anomaly: оновлення baseline кожні 15 хв (normal behavior learning)"
+when
+    Time cron "0 */15 * * * ?"
+then
+    if (vSimulation_Enabled.state != ON) return
+    // Оновлюємо baseline з історії (середнє за останні BASELINE_HOURS), default persistence
+    val tempAvg = persistenceExtensions.averageSince(vSensor_Temperature, now.minusHours(BASELINE_HOURS))
+    val tempMax = persistenceExtensions.maximumSince(vSensor_Temperature, now.minusHours(BASELINE_HOURS))
+    val tempMin = persistenceExtensions.minimumSince(vSensor_Temperature, now.minusHours(BASELINE_HOURS))
+    if (tempAvg !== null && tempMax !== null && tempMin !== null) {
+        val mean = (tempAvg.doubleValue)
+        val spread = (tempMax.doubleValue - tempMin.doubleValue)
+        var double std = 0.5
+        if (spread > 0.1) std = spread / 4.0
+        vBaseline_Temperature_Mean.postUpdate(mean)
+        vBaseline_Temperature_Std.postUpdate(std)
+    }
+    val humAvg = persistenceExtensions.averageSince(vSensor_Humidity, now.minusHours(BASELINE_HOURS))
+    val humMax = persistenceExtensions.maximumSince(vSensor_Humidity, now.minusHours(BASELINE_HOURS))
+    val humMin = persistenceExtensions.minimumSince(vSensor_Humidity, now.minusHours(BASELINE_HOURS))
+    if (humAvg !== null && humMax !== null && humMin !== null) {
+        val mean = (humAvg.doubleValue)
+        val spread = (humMax.doubleValue - humMin.doubleValue)
+        var double std = 1.0
+        if (spread > 0.1) std = spread / 4.0
+        vBaseline_Humidity_Mean.postUpdate(mean)
+        vBaseline_Humidity_Std.postUpdate(std)
+    }
+end
+
+rule "Anomaly: обчислення Z-score та severity кожні 5 хв"
+when
+    Time cron "0 */5 * * * ?"
+then
+    if (vSimulation_Enabled.state != ON) return
+    if (vSensor_Temperature.state == NULL || vBaseline_Temperature_Std.state == NULL) return
+    if (vBaseline_Temperature_Mean.state == NULL || vBaseline_Humidity_Mean.state == NULL) return
+    if (vBaseline_Humidity_Std.state == NULL) return
+
+    val temp = (vSensor_Temperature.state as Number).doubleValue
+    val tempMean = (vBaseline_Temperature_Mean.state as Number).doubleValue
+    val tempStd = (vBaseline_Temperature_Std.state as Number).doubleValue
+    var double zTemp = 0.0
+    if (tempStd > 0.01) zTemp = (temp - tempMean) / tempStd
+
+    val hum = (vSensor_Humidity.state as Number).doubleValue
+    val humMean = (vBaseline_Humidity_Mean.state as Number).doubleValue
+    val humStd = (vBaseline_Humidity_Std.state as Number).doubleValue
+    var double zHum = 0.0
+    if (humStd > 0.01) zHum = (hum - humMean) / humStd
+
+    val zScore = Math.sqrt(zTemp * zTemp + zHum * zHum)
+    var double threshold = Z_THRESHOLD_DEFAULT
+    if (vThreshold_ZScore.state != NULL) threshold = (vThreshold_ZScore.state as Number).doubleValue
+
+    vAnomaly_Score.postUpdate(Math.round(zScore * 1000.0) / 1000.0)
+
+    var String severity = "NORMAL"
+    var String explanation = "Норма"
+    if (zScore >= threshold * 2) {
+        severity = "CRITICAL"
+        explanation = "Критична аномалія: Z=" + zScore + " (темп. або вологість далеко від baseline)"
+    } else if (zScore >= threshold * 1.5) {
+        severity = "HIGH"
+        explanation = "Висока відхилення: Z=" + zScore
+    } else if (zScore >= threshold) {
+        severity = "MEDIUM"
+        explanation = "Помірна аномалія: Z=" + zScore
+    } else if (zScore >= threshold * 0.6) {
+        severity = "LOW"
+        explanation = "Низька відхилення: Z=" + zScore
+    }
+    vAnomaly_Severity.postUpdate(severity)
+    vAnomaly_Explanation.postUpdate(explanation)
+
+    if (severity != "NORMAL" && severity != "LOW" && vAlert_Silence.state != ON) {
+        vAnomaly_Alert.sendCommand(ON)
+        vAnomaly_LastTime.postUpdate(now)
+    }
+end
+
+rule "Anomaly: скидання алерту для deduplication"
+when
+    Item vAnomaly_Alert received command ON
+then
+    createTimer(now.plusMinutes(5), [ |
+        vAnomaly_Alert.sendCommand(OFF)
+    ])
+end

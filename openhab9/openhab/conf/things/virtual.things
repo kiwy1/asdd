@@ -1,0 +1,3 @@
+// Virtual Things — віртуальний носимий пристрій (PIA).
+// Things не використовуються: дані йдуть через REST API від симулятора.
+// Якщо потрібен Demo Bridge, встановіть addon "Demo" в OpenHAB.

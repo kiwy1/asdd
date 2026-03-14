@@ -1,0 +1,6 @@
+sitemap default label="OpenHAB7 Virtual"
+{
+    Frame label="Virtual Sensors (Simulated)" {
+        Group item=gVirtual
+    }
+}

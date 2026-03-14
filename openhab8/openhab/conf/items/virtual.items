@@ -1,0 +1,21 @@
+// Virtual Items — всі віртуальні, оновлення через REST API (virtual-sim)
+// Без прив'язок до реальних пристроїв
+
+Group gVirtual "Virtual Sensors (Simulated)" <settings>
+
+// Temperature
+Number:Temperature V_Temp_Living   "Living Room [%.1f °C]"   <temperature> (gVirtual)
+Number:Temperature V_Temp_Bedroom  "Bedroom [%.1f °C]"      <temperature> (gVirtual)
+Number:Temperature V_Temp_Kitchen  "Kitchen [%.1f °C]"      <temperature> (gVirtual)
+
+// Humidity
+Number:Dimensionless V_Hum_Living   "Living Humidity [%.0f %%]"  <humidity> (gVirtual)
+Number:Dimensionless V_Hum_Bedroom  "Bedroom Humidity [%.0f %%]" <humidity> (gVirtual)
+
+// Lights & Switches
+Dimmer V_Light_Bedroom   "Bedroom Light [%d %%]" <slider> (gVirtual)
+Switch V_Switch_Kitchen  "Kitchen Switch"         <switch> (gVirtual)
+
+// Power & Air
+Number:Power V_Power_Consumption "Power [%.1f W]" <energy> (gVirtual)
+Number V_CO2_Level "CO2 [%.0f ppm]" <co2> (gVirtual)

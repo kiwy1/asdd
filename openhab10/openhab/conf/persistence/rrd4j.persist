@@ -1,0 +1,10 @@
+Strategies {
+    every5min : cron="0 0/5 * * * ?"
+    default = everyChange
+}
+
+Items {
+    W_Fill_01, W_Fill_02, W_Fill_03, W_Fill_04, W_Fill_05,
+    W_Fill_06, W_Fill_07, W_Fill_08, W_Fill_09, W_Fill_10,
+    W_AverageFill, W_CriticalCount : strategy = every5min, everyChange
+}

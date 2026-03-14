@@ -1,0 +1,10 @@
+Strategies {
+    default = everyChange
+}
+
+Items {
+    gSensors* : strategy = everyChange
+    gAnomaly* : strategy = everyChange
+    gAlerts* : strategy = everyChange
+    gSimulation* : strategy = everyChange
+}

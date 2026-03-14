@@ -1,0 +1,10 @@
+# Smart City Waste — симулятор контейнерів (MQTT publisher)
+FROM python:3.12-alpine
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir paho-mqtt
+
+COPY simulator/ ./
+
+ENTRYPOINT ["python", "-u", "waste_simulate.py"]

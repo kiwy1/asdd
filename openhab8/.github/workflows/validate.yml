@@ -1,0 +1,56 @@
+# OpenHAB Config Validation — Items, Things, Sitemaps, YAML/JSON, Rules DSL
+name: Validate
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate-config:
+    name: OpenHAB config validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Items syntax check
+        run: python scripts/validate_items.py
+
+      - name: Things validation
+        run: python scripts/validate_thing.py
+
+      - name: Sitemaps syntax validation
+        run: python scripts/validate_sitemap.py
+
+      - name: Rules DSL syntax check
+        run: python scripts/validate_rules.py
+
+  validate-yaml-json:
+    name: YAML/JSON validation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install yamllint
+        run: pip install yamllint
+
+      - name: YAML validation
+        run: |
+          yamllint -d relaxed openhab/conf/misc/config.yml || true
+          find openhab/conf -name "*.yml" -o -name "*.yaml" | xargs -I {} yamllint -d relaxed {} || true
+
+      - name: JSON validation
+        run: |
+          python -c "
+          import json
+          from pathlib import Path
+          for f in Path('openhab/conf').rglob('*.json'):
+              json.loads(f.read_text())
+              print(f'OK: {f}')
+          "

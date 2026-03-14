@@ -1,0 +1,5 @@
+.env
+backups/
+*.log
+openhab/conf/services/secret.cfg
+.DS_Store

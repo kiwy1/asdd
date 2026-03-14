@@ -1,0 +1,15 @@
+// Persistence для historical data — ML training та anomaly detection
+Strategies {
+    everyMinute : "0 * * * * ?"
+    every5Minutes : "0 */5 * * * ?"
+    everyHour : "0 0 * * * ?"
+    default = everyChange
+}
+
+Items {
+    // Сенсори — зберігати кожну зміну та кожну хвилину для часових рядів
+    gSensors* : strategy = everyChange, everyMinute
+    // Anomaly outputs та baseline
+    gAnomaly* : strategy = everyChange, every5Minutes
+    gAlerts* : strategy = everyChange
+}

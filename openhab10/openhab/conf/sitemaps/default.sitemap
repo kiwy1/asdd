@@ -1,0 +1,57 @@
+sitemap default label="Smart City Waste" {
+    Frame label="Dashboard" {
+        Text item=W_AverageFill
+        Text item=W_CriticalCount
+        Group item=gWasteContainers
+    }
+    Frame label="Container 01 - Central Square" {
+        Text item=W_Fill_01
+        Text item=W_Lat_01
+        Text item=W_Lon_01
+    }
+    Frame label="Container 02 - Railway Station" {
+        Text item=W_Fill_02
+        Text item=W_Lat_02
+        Text item=W_Lon_02
+    }
+    Frame label="Container 03 - City Park" {
+        Text item=W_Fill_03
+        Text item=W_Lat_03
+        Text item=W_Lon_03
+    }
+    Frame label="Container 04 - Market" {
+        Text item=W_Fill_04
+        Text item=W_Lat_04
+        Text item=W_Lon_04
+    }
+    Frame label="Container 05 - University" {
+        Text item=W_Fill_05
+        Text item=W_Lat_05
+        Text item=W_Lon_05
+    }
+    Frame label="Container 06 - Hospital" {
+        Text item=W_Fill_06
+        Text item=W_Lat_06
+        Text item=W_Lon_06
+    }
+    Frame label="Container 07 - Stadium" {
+        Text item=W_Fill_07
+        Text item=W_Lat_07
+        Text item=W_Lon_07
+    }
+    Frame label="Container 08 - Shopping Mall" {
+        Text item=W_Fill_08
+        Text item=W_Lat_08
+        Text item=W_Lon_08
+    }
+    Frame label="Container 09 - Bus Depot" {
+        Text item=W_Fill_09
+        Text item=W_Lat_09
+        Text item=W_Lon_09
+    }
+    Frame label="Container 10 - Residential Block" {
+        Text item=W_Fill_10
+        Text item=W_Lat_10
+        Text item=W_Lon_10
+    }
+}

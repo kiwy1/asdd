@@ -1,0 +1,19 @@
+# OpenHAB config (YAML) — для валідації YAML у CI
+metadata:
+  name: openhab-virtual
+  version: "1.0"
+  description: Virtual items with simulation
+
+simulation:
+  enabled: true
+  interval_seconds: 15
+  items:
+    - V_Temp_Living
+    - V_Temp_Bedroom
+    - V_Temp_Kitchen
+    - V_Hum_Living
+    - V_Hum_Bedroom
+    - V_Light_Bedroom
+    - V_Switch_Kitchen
+    - V_Power_Consumption
+    - V_CO2_Level

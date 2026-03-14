@@ -1,0 +1,77 @@
+# OpenHAB 10 — Smart City Waste Management System (Варіант 1)
+# Всі Items віртуальні з симуляцією: 10 контейнерів, заповненість 0–100%, GPS, MQTT
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    container_name: openhab10-mqtt
+    restart: unless-stopped
+    ports:
+      - "${MQTT_PORT:-1883}:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-t", "$$SYS/broker/uptime", "-C", "1", "-W", "3"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  openhab:
+    image: openhab/openhab:4.2
+    container_name: openhab10-openhab
+    restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    ports:
+      - "${OPENHAB_HTTP_PORT:-8080}:8080"
+      - "${OPENHAB_HTTPS_PORT:-8443}:8443"
+    volumes:
+      - ./openhab/conf:/openhab/conf
+      - openhab_userdata:/openhab/userdata
+    environment:
+      TZ: ${TZ:-Europe/Kyiv}
+      CRYPTO_POLICY: unlimited
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+      JAVA_OPTS: "-Duser.timezone=${TZ:-Europe/Kyiv} -Xmx512m -Xms128m"
+      USER_ID: "9001"
+      GROUP_ID: "9001"
+    networks:
+      - openhab-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/rest/items?limit=1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+  waste-sim:
+    build:
+      context: .
+      dockerfile: Dockerfile.sim
+    container_name: openhab10-waste-sim
+    restart: unless-stopped
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    environment:
+      MQTT_BROKER: mosquitto
+      MQTT_PORT: "1883"
+      SIM_INTERVAL: ${SIM_INTERVAL:-15}
+    networks:
+      - openhab-net
+
+volumes:
+  openhab_userdata:
+    driver: local
+
+networks:
+  openhab-net:
+    driver: bridge
+    name: openhab10-net

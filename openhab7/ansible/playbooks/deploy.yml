@@ -1,0 +1,51 @@
+---
+# Optional: deploy OpenHAB stack via Ansible (Docker Compose on target host)
+- name: Deploy OpenHAB7 stack
+  hosts: openhab_stack
+  gather_facts: true
+  tasks:
+    - name: Ensure Docker and Docker Compose are present
+      block:
+        - name: Install Docker dependencies (apt)
+          ansible.builtin.apt:
+            name: "{{ item }}"
+            state: present
+            update_cache: true
+          loop: [ca-certificates, curl, gnupg]
+          when: ansible_os_family == "Debian"
+
+        - name: Add Docker GPG key
+          ansible.builtin.get_url:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            dest: /etc/apt/keyrings/docker.asc
+            mode: '0644'
+          when: ansible_os_family == "Debian"
+
+        - name: Add Docker repository
+          ansible.builtin.apt_repository:
+            repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
+            state: present
+          when: ansible_os_family == "Debian"
+
+        - name: Install Docker and Docker Compose plugin
+          ansible.builtin.apt:
+            name: [docker-ce, docker-ce-cli, containerd.io, docker-buildx-plugin, docker-compose-plugin]
+            state: present
+            update_cache: true
+          when: ansible_os_family == "Debian"
+
+    - name: Ensure .env exists (create from .env.example if missing)
+      ansible.builtin.copy:
+        src: "{{ project_dir }}/.env.example"
+        dest: "{{ project_dir }}/.env"
+        remote_src: true
+      register: env_created
+      failed_when: false
+
+    - name: Start OpenHAB7 stack with Docker Compose
+      ansible.builtin.shell: |
+        cd "{{ project_dir }}" && docker compose -f docker/docker-compose.yml -p openhab7 up -d --build
+      args:
+        executable: /bin/bash
+      register: compose_up
+      changed_when: "'Creating' in compose_up.stdout or 'Starting' in compose_up.stdout or 'Building' in compose_up.stdout"

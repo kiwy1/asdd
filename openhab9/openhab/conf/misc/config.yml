@@ -1,0 +1,20 @@
+# OpenHAB 9 — PIA Health Monitor (віртуальна симуляція)
+metadata:
+  name: openhab-health-monitor
+  version: "1.0"
+  description: Virtual health wearable — heart rate, activity, sleep, geolocation
+
+simulation:
+  enabled: true
+  interval_seconds: 10
+  items:
+    - V_HeartRate
+    - V_ActivityLevel
+    - V_ActivityScore
+    - V_SleepDuration
+    - V_SleepPhase
+    - V_SleepQuality
+    - V_Geolocation
+    - V_LocationLat
+    - V_LocationLon
+    - V_LocationAlt

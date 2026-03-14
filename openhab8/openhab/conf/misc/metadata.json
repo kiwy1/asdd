@@ -1,0 +1,7 @@
+{
+  "project": "openhab8-ci",
+  "version": "1.0.0",
+  "description": "OpenHAB config with virtual items and simulation",
+  "items_count": 9,
+  "environments": ["docker", "ci"]
+}

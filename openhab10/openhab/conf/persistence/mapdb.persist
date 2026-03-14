@@ -1,0 +1,7 @@
+Strategies {
+    default = everyChange
+}
+
+Items {
+    gWasteContainers*, W_AverageFill, W_CriticalCount : strategy = everyChange
+}

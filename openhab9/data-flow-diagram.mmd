@@ -1,0 +1,17 @@
+flowchart LR
+    subgraph User
+        U[Користувач]
+    end
+    subgraph Device
+        W[Носимий пристрій<br/>ЧСС, активність, сон, GPS]
+    end
+    subgraph Platform
+        P[Платформа / OpenHAB]
+        S[(Зашифроване<br/>сховище)]
+        D[Лікар / догляд]
+    end
+
+    U -->|"збір даних"| W
+    W -->|"TLS"| P
+    P -->|"зберігання"| S
+    P -->|"за згодою"| D

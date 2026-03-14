@@ -1,0 +1,32 @@
+// Smart City Waste Management — правила симуляції та аналітики
+// Оновлення середньої заповненості та лічильника критичних контейнерів
+
+rule "Update average fill and critical count"
+when
+    Member of gWasteFillOnly changed
+then
+    val fills = gWasteFillOnly.members.map[Number n | n.state].filter[s | s instanceof DecimalType].map[s | (s as DecimalType).doubleValue]
+    if (fills.size > 0) {
+        var double sum = 0.0
+        for (v : fills) sum = sum + v
+        val avg = sum / fills.size
+        W_AverageFill.postUpdate(avg)
+    }
+    val critical = gWasteFillOnly.members.filter[n |
+        (n.state instanceof DecimalType) && (n.state as DecimalType).intValue > 70
+    ].size
+    W_CriticalCount.postUpdate(critical)
+end
+
+rule "Log critical fill level (optional alert)"
+when
+    Item W_Fill_01 changed or Item W_Fill_02 changed or Item W_Fill_03 changed or
+    Item W_Fill_04 changed or Item W_Fill_05 changed or Item W_Fill_06 changed or
+    Item W_Fill_07 changed or Item W_Fill_08 changed or Item W_Fill_09 changed or Item W_Fill_10 changed
+then
+    val item = triggeringItem
+    val fill = if (item.state instanceof DecimalType) (item.state as DecimalType).intValue else 0
+    if (fill > 70) {
+        logInfo("waste", "CRITICAL: {} at {}% - collection recommended", item.name, fill)
+    }
+end

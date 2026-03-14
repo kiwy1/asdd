@@ -1,0 +1,80 @@
+# GitLab CI — mirrors GitHub Actions pipeline (validate, test, build)
+stages:
+  - validate
+  - test
+  - build
+  - deploy
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+  DOCKER_DRIVER: overlay2
+
+cache:
+  key: "${CI_JOB_NAME}"
+  paths:
+    - .cache/pip
+
+# OpenHAB config validation
+validate:config:
+  stage: validate
+  image: python:3.12-alpine
+  script:
+    - pip install yamllint
+    - python scripts/validate_items.py
+    - python scripts/validate_thing.py
+    - python scripts/validate_sitemap.py
+    - python scripts/validate_rules.py
+    - yamllint -d relaxed openhab/conf/misc/config.yml || true
+    - python -c "import json; from pathlib import Path; [json.loads(p.read_text()) for p in Path('openhab/conf').rglob('*.json')]"
+
+# Unit tests
+test:unit:
+  stage: test
+  image: python:3.12
+  script:
+    - pip install pytest pytest-cov
+    - pytest tests/unit -v --tb=short
+
+# Integration tests (optional: require Docker-in-Docker)
+test:integration:
+  stage: test
+  image: docker:24
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - apk add --no-cache python3 py3-pip
+    - pip install requests pytest
+    - docker compose up -d openhab
+    - sleep 90
+  script:
+    - export OPENHAB_URL=http://localhost:8080
+    - pytest tests/integration -v --tb=short
+  after_script:
+    - docker compose down
+  allow_failure: true
+
+# Docker build + Trivy scan
+build:simulator:
+  stage: build
+  image: docker:24
+  services:
+    - docker:24-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  script:
+    - docker build -f Dockerfile -t openhab8-virtual-sim:$CI_COMMIT_SHORT_SHA .
+    - apk add --no-cache curl
+    - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+    - trivy image --exit-code 0 --severity HIGH,CRITICAL openhab8-virtual-sim:$CI_COMMIT_SHORT_SHA || true
+
+deploy:artifacts:
+  stage: deploy
+  script:
+    - echo "Config artifact: openhab/conf (retain in pipeline)"
+  artifacts:
+    paths:
+      - openhab/conf/
+    expire_in: 30 days
+  when: manual

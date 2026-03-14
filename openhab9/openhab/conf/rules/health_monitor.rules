@@ -1,0 +1,31 @@
+// Правила для віртуального моніторингу здоров'я (PIA — симуляція)
+
+rule "Health: log heart rate change"
+when
+    Item V_HeartRate changed
+then
+    logInfo("health", "Heart rate: " + V_HeartRate.state + " bpm")
+end
+
+rule "Health: high heart rate simulation alert"
+when
+    Item V_HeartRate changed
+then
+    if (V_HeartRate.state as Number) > 90 {
+        logWarn("health", "High heart rate: " + V_HeartRate.state + " bpm")
+    }
+end
+
+rule "Health: sleep phase changed"
+when
+    Item V_SleepPhase changed
+then
+    logInfo("health", "Sleep phase: " + V_SleepPhase.state)
+end
+
+rule "Health: geolocation updated"
+when
+    Item V_Geolocation changed
+then
+    logInfo("health", "Location updated: " + V_Geolocation.state)
+end

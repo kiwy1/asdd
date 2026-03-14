@@ -1,0 +1,38 @@
+# OpenHAB 4.x — Edge AI Anomaly Detection (всі Items віртуальні з симуляцією)
+# Вимоги: OpenHAB 4.x, Python/JS, ML integration, persistence
+
+services:
+  openhab:
+    image: openhab/openhab:4.2.1
+    container_name: openhab6-anomaly
+    restart: unless-stopped
+    ports:
+      - "8086:8080"
+      - "8446:8443"
+    volumes:
+      - ./openhab/conf:/openhab/conf
+      - openhab6_userdata:/openhab/userdata
+      - ./openhab/addons:/openhab/addons
+    environment:
+      TZ: Europe/Kyiv
+      CRYPTO_POLICY: unlimited
+      OPENHAB_HTTP_PORT: "8080"
+      OPENHAB_HTTPS_PORT: "8443"
+      JAVA_OPTS: "-Duser.timezone=Europe/Kyiv -Xmx512m -Xms128m"
+      OPENHAB_LOGDIR: /openhab/userdata/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:8080/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+    networks:
+      - anomaly-net
+
+volumes:
+  openhab6_userdata:
+    driver: local
+
+networks:
+  anomaly-net:
+    driver: bridge

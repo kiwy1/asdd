@@ -1,0 +1,70 @@
+// MQTT Broker + 10 віртуальних контейнерів сміття (Smart City Waste Management)
+// Дані надходять з симулятора по MQTT
+
+Bridge mqtt:broker:wastebroker "Waste MQTT Broker" @ "Smart City" [
+    host="mosquitto",
+    port=1883,
+    clientID="openhab-waste",
+    secure=false
+] {
+    Thing mqtt:topic:container01 "Container 01 - Central Square" {
+        Channels:
+            Type number : fill "Fill Level" [ stateTopic="waste/container/01/fill", min=0, max=100 ]
+            Type number : lat  "Latitude"   [ stateTopic="waste/container/01/lat" ]
+            Type number : lon  "Longitude"  [ stateTopic="waste/container/01/lon" ]
+    }
+    Thing mqtt:topic:container02 "Container 02 - Railway Station" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/02/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/02/lat" ]
+            Type number : lon  [ stateTopic="waste/container/02/lon" ]
+    }
+    Thing mqtt:topic:container03 "Container 03 - City Park" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/03/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/03/lat" ]
+            Type number : lon  [ stateTopic="waste/container/03/lon" ]
+    }
+    Thing mqtt:topic:container04 "Container 04 - Market" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/04/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/04/lat" ]
+            Type number : lon  [ stateTopic="waste/container/04/lon" ]
+    }
+    Thing mqtt:topic:container05 "Container 05 - University" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/05/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/05/lat" ]
+            Type number : lon  [ stateTopic="waste/container/05/lon" ]
+    }
+    Thing mqtt:topic:container06 "Container 06 - Hospital" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/06/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/06/lat" ]
+            Type number : lon  [ stateTopic="waste/container/06/lon" ]
+    }
+    Thing mqtt:topic:container07 "Container 07 - Stadium" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/07/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/07/lat" ]
+            Type number : lon  [ stateTopic="waste/container/07/lon" ]
+    }
+    Thing mqtt:topic:container08 "Container 08 - Shopping Mall" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/08/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/08/lat" ]
+            Type number : lon  [ stateTopic="waste/container/08/lon" ]
+    }
+    Thing mqtt:topic:container09 "Container 09 - Bus Depot" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/09/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/09/lat" ]
+            Type number : lon  [ stateTopic="waste/container/09/lon" ]
+    }
+    Thing mqtt:topic:container10 "Container 10 - Residential Block" {
+        Channels:
+            Type number : fill [ stateTopic="waste/container/10/fill", min=0, max=100 ]
+            Type number : lat  [ stateTopic="waste/container/10/lat" ]
+            Type number : lon  [ stateTopic="waste/container/10/lon" ]
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "project": "openhab9-pia-health-monitor",
+  "version": "1.0.0",
+  "description": "PIA Варіант 1 — віртуальний носимий пристрій моніторингу здоров'я",
+  "items_count": 10,
+  "environments": ["docker", "simulation"]
+}

@@ -1,0 +1,29 @@
+sitemap default label="Anomaly Detection" {
+    Frame label="Віртуальні сенсори (симуляція)" {
+        Slider item=vSensor_Temperature
+        Slider item=vSensor_Humidity
+        Slider item=vSensor_Power
+        Slider item=vSensor_Load
+    }
+    Frame label="Симуляція" {
+        Switch item=vSimulation_Enabled
+        Setpoint item=vSimulation_AnomalyInject minValue=0 maxValue=2 step=1
+    }
+    Frame label="Anomaly Detection" {
+        Text item=vAnomaly_Score
+        Text item=vAnomaly_Severity
+        Text item=vAnomaly_Explanation
+        Switch item=vAnomaly_Alert
+        Text item=vAnomaly_LastTime
+    }
+    Frame label="Baseline (Normal Behavior)" {
+        Text item=vBaseline_Temperature_Mean
+        Text item=vBaseline_Temperature_Std
+        Text item=vBaseline_Humidity_Mean
+        Text item=vBaseline_Humidity_Std
+    }
+    Frame label="Пороги та алерти" {
+        Setpoint item=vThreshold_ZScore minValue=1 maxValue=5 step=0.5
+        Switch item=vAlert_Silence
+    }
+}

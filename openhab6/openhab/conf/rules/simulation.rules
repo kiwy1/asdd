@@ -1,0 +1,65 @@
+// ============================================================
+// Симуляція віртуальних сенсорів — оновлення кожну хвилину (cron)
+// Normal behavior: сезонність + шум; опційно інжекція аномалій
+// ============================================================
+
+var java.util.Random random = new java.util.Random()
+
+rule "Симуляція: вмикання при старті системи"
+when
+    System started
+then
+    if (vSimulation_Enabled.state == NULL || vSimulation_Enabled.state == OFF) {
+        vSimulation_Enabled.sendCommand(ON)
+    }
+
+    // Початкові значення, щоб Items не були NULL до першого циклу симуляції
+    if (vSensor_Temperature.state == NULL) {
+        vSensor_Temperature.postUpdate(21.0)
+        vSensor_Humidity.postUpdate(45.0)
+        vSensor_Power.postUpdate(100.0)
+        vSensor_Load.postUpdate(30.0)
+        vSensor_Noise.postUpdate(0.0)
+        vSimulation_AnomalyInject.postUpdate(0)
+    }
+end
+
+rule "Симуляція: оновлення сенсорів кожну хвилину"
+when
+    Time cron "0 * * * * ?"
+then
+    if (vSimulation_Enabled.state != ON) return
+
+    var int inject = 0
+    if (vSimulation_AnomalyInject.state != NULL) inject = (vSimulation_AnomalyInject.state as Number).intValue
+    val t = (now.getMillis / 1000.0) % 86400.0
+    val hourOfDay = t / 3600.0
+
+    var double tempBase = 21.0 + 2.5 * Math.sin(2 * Math.PI * (hourOfDay - 8) / 24)
+    var double humidityBase = 45.0 + 15 * Math.sin(2 * Math.PI * (hourOfDay - 6) / 24)
+    var double powerBase = 120.0 + 80 * Math.sin(2 * Math.PI * (hourOfDay - 12) / 24)
+    if (powerBase < 30) powerBase = 30
+    var double loadBase = 40.0 + 25 * Math.sin(2 * Math.PI * (hourOfDay - 14) / 24)
+    if (loadBase < 5) loadBase = 5
+
+    val noise = 0.5 * (random.nextGaussian())
+    tempBase = tempBase + noise * 0.8
+    humidityBase = humidityBase + noise * 2
+    powerBase = powerBase + noise * 5
+    loadBase = loadBase + noise * 3
+
+    if (inject == 1) {
+        tempBase = tempBase + 8.0
+        powerBase = powerBase + 150
+    }
+    if (inject == 2) {
+        tempBase = tempBase + (t / 3600.0)
+        loadBase = loadBase + (t / 7200.0)
+    }
+
+    vSensor_Temperature.postUpdate(Math.round(tempBase * 10.0) / 10.0)
+    vSensor_Humidity.postUpdate(Math.round(humidityBase * 10.0) / 10.0)
+    vSensor_Power.postUpdate(Math.round(powerBase * 10.0) / 10.0)
+    vSensor_Load.postUpdate(Math.round(loadBase * 10.0) / 10.0)
+    vSensor_Noise.postUpdate(Math.round(noise * 100.0) / 100.0)
+end

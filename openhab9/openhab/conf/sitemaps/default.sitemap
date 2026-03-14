@@ -1,0 +1,23 @@
+sitemap default label="Health Monitor (PIA)" {
+    Frame label="Health Monitor — Virtual Wearable" {
+        Group item=gHealthMonitor
+    }
+    Frame label="Heart Rate" {
+        Text item=V_HeartRate
+    }
+    Frame label="Activity" {
+        Text item=V_ActivityLevel
+        Text item=V_ActivityScore
+    }
+    Frame label="Sleep" {
+        Text item=V_SleepDuration
+        Text item=V_SleepPhase
+        Text item=V_SleepQuality
+    }
+    Frame label="Geolocation" {
+        Text item=V_Geolocation
+        Text item=V_LocationLat
+        Text item=V_LocationLon
+        Text item=V_LocationAlt
+    }
+}

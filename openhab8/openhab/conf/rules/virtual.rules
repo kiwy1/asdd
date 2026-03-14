@@ -1,0 +1,24 @@
+// Virtual rules — реакції на зміни віртуальних Items (симуляція логіки)
+
+rule "Virtual: log temperature change"
+when
+    Item V_Temp_Living changed
+then
+    logInfo("virtual", "Living room temp: " + V_Temp_Living.state)
+end
+
+rule "Virtual: CO2 alert simulation"
+when
+    Item V_CO2_Level changed
+then
+    if (V_CO2_Level.state as Number) > 1000 {
+        logWarn("virtual", "CO2 level high: " + V_CO2_Level.state)
+    }
+end
+
+rule "Virtual: kitchen switch toggled"
+when
+    Item V_Switch_Kitchen changed
+then
+    logInfo("virtual", "Kitchen switch is " + V_Switch_Kitchen.state)
+end

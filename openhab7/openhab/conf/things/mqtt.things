@@ -1,0 +1,8 @@
+// MQTT Broker - Mosquitto (service discovery: host=mosquitto)
+Bridge mqtt:broker:broker "Mosquitto Broker" @ "MQTT" [
+    host="mosquitto",
+    port=1883,
+    clientID="openhab7",
+    secure=false
+] {
+}
